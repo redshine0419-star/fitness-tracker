@@ -63,6 +63,19 @@ const EX = {
   전신서킷:         { sets:{p1:null,  p2:null,  p3:"45분"}, tw:null,                        yt:"전신 서킷 트레이닝" },
 };
 
+// ── 부위별 운동 그룹 (교체 후보) ─────────────────────────
+const GROUPS = {
+  "가슴·삼두": ["푸시업","덤벨벤치프레스","덤벨플라이","트라이셉스딥","바벨벤치프레스","인클라인덤벨프레스","케이블플라이","클로즈그립벤치","인클라인푸시업","케이블트라이셉스","딥스"],
+  "등·이두":   ["랫풀다운","시티드케이블로우","덤벨컬","페이스풀","바벨로우","풀업","해머컬","리버스플라이","시티드로우","케이블컬"],
+  "하체":      ["고블릿스쿼트","레그프레스","런지","바벨스쿼트","루마니안데드리프트","레그컬"],
+  "어깨":      ["덤벨숄더프레스","사이드레터럴","바벨숄더프레스","업라이트로우","숄더프레스","사이드레터럴고반복"],
+  "코어":      ["플랭크","케이블우드찹","레그레이즈","버드독"],
+  "유산소":    ["유산소기초","HIIT인터벌","저강도유산소","타바타","파워워킹","전신서킷","전신스트레칭"],
+};
+// 운동 → 그룹 역방향 맵
+const EX_GROUP = {};
+Object.entries(GROUPS).forEach(([g,keys])=>keys.forEach(k=>{EX_GROUP[k]=g;}));
+
 // ── Phase별 주간 루틴 (운동명 = EX 키) ───────────────────
 const PHASE_INFO = [
   {
@@ -195,19 +208,20 @@ function load(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d
 function save(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 
 // ── 운동 행 컴포넌트 ────────────────────────────────────
-function ExRow({ exKey, pKey, checked, onToggle }) {
+function ExRow({ exKey, pKey, checked, onToggle, onSwapClick, isSwapped }) {
   const ex   = EX[exKey];
   const sets = ex?.sets?.[pKey] || "";
   const tw   = ex?.tw?.[pKey] || null;
   const name = exName(exKey);
   const link = ytLink(exKey);
+  const group = EX_GROUP[exKey];
 
   return (
     <div style={{
       display:"flex", alignItems:"flex-start", gap:10,
       padding:"10px 12px", borderRadius:10,
       background: checked?"#f0f9f4":"#fafafa",
-      border: checked?"1px solid #c3e8d4":"1px solid #f0f0f0",
+      border: checked?"1px solid #c3e8d4": isSwapped?"1px solid #d4e8ff":"1px solid #f0f0f0",
       transition:"all .15s",
     }}>
       <div onClick={onToggle} style={{
@@ -227,6 +241,7 @@ function ExRow({ exKey, pKey, checked, onToggle }) {
             textDecoration:checked?"line-through":"none",
             cursor:"pointer",
           }}>{name}</span>
+          {isSwapped && <span style={{ fontSize:9, color:"#4a90d9", background:"#eef5fd", borderRadius:8, padding:"1px 6px" }}>교체됨</span>}
           {link && (
             <a href={link} target="_blank" rel="noreferrer" style={{
               display:"inline-flex", alignItems:"center", gap:3,
@@ -239,6 +254,71 @@ function ExRow({ exKey, pKey, checked, onToggle }) {
         <div style={{ fontSize:11, color:"#aaa", marginTop:2 }}>
           {sets && <span>{sets}</span>}
           {tw && <span style={{ color:"#4a90d9", marginLeft:6 }}>· 목표 {tw}</span>}
+        </div>
+      </div>
+      {group && onSwapClick && (
+        <button onClick={onSwapClick} style={{
+          flexShrink:0, border:"1px solid #e0e0e0", background:"#fff",
+          borderRadius:8, padding:"3px 8px", fontSize:10, cursor:"pointer",
+          color:"#666", marginTop:1, whiteSpace:"nowrap",
+        }}>교체</button>
+      )}
+    </div>
+  );
+}
+
+function SwapSheet({ slot, pKey, currentKeys, onSelect, onClose }) {
+  const group = EX_GROUP[slot.exKey];
+  const candidates = group ? GROUPS[group] : [];
+  return (
+    <div style={{ position:"fixed",inset:0,background:"rgba(0,0,0,0.45)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:1000 }}
+      onClick={onClose}>
+      <div style={{ background:"#fff", borderRadius:"20px 20px 0 0", padding:"20px 20px 32px", width:"100%", maxWidth:480 }}
+        onClick={e=>e.stopPropagation()}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
+          <div style={{ fontSize:15, fontWeight:700 }}>{group} 운동 교체</div>
+          <button onClick={onClose} style={{ border:"none", background:"none", fontSize:20, cursor:"pointer", color:"#aaa", lineHeight:1 }}>×</button>
+        </div>
+        <div style={{ fontSize:11, color:"#aaa", marginBottom:14 }}>같은 부위 운동 중 하나를 선택하세요</div>
+        <div style={{ display:"flex", flexDirection:"column", gap:8, maxHeight:380, overflowY:"auto" }}>
+          {candidates.map(k=>{
+            const isCurrent = k === slot.exKey;
+            const isInPlan  = currentKeys.includes(k) && !isCurrent;
+            const ex = EX[k];
+            const sets = ex?.sets?.[pKey] || ex?.sets?.p1 || ex?.sets?.p2 || ex?.sets?.p3 || "";
+            const tw   = ex?.tw?.[pKey] || ex?.tw?.p1 || ex?.tw?.p2 || ex?.tw?.p3 || null;
+            const link = ytLink(k);
+            return (
+              <div key={k} onClick={()=>!isInPlan && onSelect(k)} style={{
+                display:"flex", alignItems:"flex-start", gap:10,
+                padding:"10px 12px", borderRadius:10,
+                background: isCurrent?"#f0f9f4": isInPlan?"#fafafa":"#fafafa",
+                border: isCurrent?"1.5px solid #2d7a4f": isInPlan?"1px solid #f0f0f0":"1px solid #e8e8e8",
+                cursor: isInPlan?"default":"pointer",
+                opacity: isInPlan?0.45:1,
+              }}>
+                <div style={{ flex:1 }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                    <span style={{ fontSize:13, fontWeight:600, color:"#1a1a1a" }}>{exName(k)}</span>
+                    {isCurrent && <span style={{ fontSize:9, color:"#2d7a4f", background:"#eaf7f0", borderRadius:8, padding:"1px 6px" }}>현재</span>}
+                    {isInPlan && <span style={{ fontSize:9, color:"#aaa", background:"#f5f5f5", borderRadius:8, padding:"1px 6px" }}>이미 포함</span>}
+                    {link && (
+                      <a href={link} target="_blank" rel="noreferrer" onClick={e=>e.stopPropagation()} style={{
+                        fontSize:10, color:"#c0392b", background:"#fee", borderRadius:8, padding:"1px 6px", textDecoration:"none",
+                      }}>▶ 영상</a>
+                    )}
+                  </div>
+                  <div style={{ fontSize:11, color:"#aaa", marginTop:2 }}>
+                    {sets && <span>{sets}</span>}
+                    {tw && <span style={{ color:"#4a90d9", marginLeft:6 }}>· {tw}</span>}
+                  </div>
+                </div>
+                {!isCurrent && !isInPlan && (
+                  <div style={{ fontSize:18, color:"#ccc", marginTop:2 }}>›</div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -266,6 +346,8 @@ export default function App() {
   const [showGoalEdit, setShowGoalEdit] = useState(false);
   const [goalWeightInput, setGoalWeightInput] = useState("");
   const [savedGoalWeight, setSavedGoalWeight] = useState(()=>load("fit6gw",null));
+  const [swaps, setSwaps]       = useState(()=>load("fit6sw",{}));
+  const [swapSlot, setSwapSlot] = useState(null); // {dayKey, index, exKey, currentKeys, pKey}
 
   const today       = new Date();
   const todayKey    = dateKey(today);
@@ -299,6 +381,16 @@ export default function App() {
   };
   const deleteIb = (i) => { const next=inbody.filter((_,idx)=>idx!==i); setInbody(next); save("fit6ib",next); };
   const saveGoalW= () => { const v=parseFloat(goalWeightInput); if(!isNaN(v)){setSavedGoalWeight(v);save("fit6gw",v);} setShowGoalEdit(false); };
+
+  const swapKey = (dayKey, index) => `${dayKey}_${index}`;
+  const resolveKey = (dayKey, index, originalKey) => swaps[swapKey(dayKey, index)] || originalKey;
+  const doSwap = (newKey) => {
+    if (!swapSlot) return;
+    const k = swapKey(swapSlot.dayKey, swapSlot.index);
+    const next = { ...swaps };
+    if (newKey === swapSlot.originalKey) { delete next[k]; } else { next[k] = newKey; }
+    setSwaps(next); save("fit6sw", next); setSwapSlot(null);
+  };
 
   const weekDates = getWeekDates(weekOff);
 
@@ -356,12 +448,18 @@ export default function App() {
                 <div style={{ textAlign:"center", color:"#bbb", padding:"20px 0", fontSize:14 }}>😴 오늘은 완전 휴식일</div>
               ) : (
                 <div style={{ display:"flex", flexDirection:"column", gap:7 }}>
-                  {todayPlan.exKeys.map((k,i)=>(
-                    <ExRow key={k} exKey={k} pKey={currentPhase.pKey}
-                      checked={(checks[todayKey]||[]).includes(i)}
-                      onToggle={()=>toggleCheck(todayKey,i)}
-                    />
-                  ))}
+                  {todayPlan.exKeys.map((origKey,i)=>{
+                    const resolvedKey = resolveKey(todayKey, i, origKey);
+                    const resolvedKeys = todayPlan.exKeys.map((ok,ii)=>resolveKey(todayKey,ii,ok));
+                    return (
+                      <ExRow key={`${todayKey}_${i}`} exKey={resolvedKey} pKey={currentPhase.pKey}
+                        checked={(checks[todayKey]||[]).includes(i)}
+                        onToggle={()=>toggleCheck(todayKey,i)}
+                        isSwapped={resolvedKey !== origKey}
+                        onSwapClick={()=>setSwapSlot({dayKey:todayKey, index:i, exKey:resolvedKey, originalKey:origKey, currentKeys:resolvedKeys, pKey:currentPhase.pKey})}
+                      />
+                    );
+                  })}
                   <div style={{ height:4, background:"#f0f0f0", borderRadius:2, marginTop:4 }}>
                     <div style={{ height:"100%", borderRadius:2, background:"#2d7a4f",
                       width:`${Math.round(((checks[todayKey]||[]).length/todayPlan.exKeys.length)*100)}%`, transition:"width .3s" }}/>
@@ -429,12 +527,18 @@ export default function App() {
                     </div>
                     {isToday && plan.exKeys.length>0 && (
                       <div style={{ marginTop:10, display:"flex", flexDirection:"column", gap:7 }}>
-                        {plan.exKeys.map((k,i)=>(
-                          <ExRow key={k} exKey={k} pKey={ph.pKey}
-                            checked={(checks[dKey]||[]).includes(i)}
-                            onToggle={()=>toggleCheck(dKey,i)}
-                          />
-                        ))}
+                        {plan.exKeys.map((origKey,i)=>{
+                          const resolvedKey = resolveKey(dKey,i,origKey);
+                          const resolvedKeys = plan.exKeys.map((ok,ii)=>resolveKey(dKey,ii,ok));
+                          return (
+                            <ExRow key={`${dKey}_${i}`} exKey={resolvedKey} pKey={ph.pKey}
+                              checked={(checks[dKey]||[]).includes(i)}
+                              onToggle={()=>toggleCheck(dKey,i)}
+                              isSwapped={resolvedKey !== origKey}
+                              onSwapClick={()=>setSwapSlot({dayKey:dKey, index:i, exKey:resolvedKey, originalKey:origKey, currentKeys:resolvedKeys, pKey:ph.pKey})}
+                            />
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -667,6 +771,17 @@ export default function App() {
           </div>
         )}
       </div>
+
+      {/* 운동 교체 시트 */}
+      {swapSlot && (
+        <SwapSheet
+          slot={swapSlot}
+          pKey={swapSlot.pKey}
+          currentKeys={swapSlot.currentKeys}
+          onSelect={doSwap}
+          onClose={()=>setSwapSlot(null)}
+        />
+      )}
 
       {/* 목표 체중 수정 모달 */}
       {showGoalEdit && (
