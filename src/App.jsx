@@ -207,14 +207,157 @@ function ytLink(key) {
 function load(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} }
 function save(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 
+// ── 점진적 과부하 헬퍼 ──────────────────────────────────
+const CARDIO_KEYS = new Set(["유산소기초","HIIT인터벌","저강도유산소","타바타","파워워킹","전신서킷","전신스트레칭","플랭크"]);
+const BODYWEIGHT_KEYS = new Set(["푸시업","인클라인푸시업","트라이셉스딥","딥스","풀업","레그레이즈","버드독"]);
+
+function isCardio(key) { return CARDIO_KEYS.has(key); }
+function isBodyweight(key) { return BODYWEIGHT_KEYS.has(key); }
+
+// 같은 운동의 전체 기록에서 과부하 상태 계산
+function getOverloadStatus(records) {
+  if (!records || records.length === 0) return null;
+  const sorted = [...records].sort((a,b)=>a.date.localeCompare(b.date));
+  const last = sorted[sorted.length-1];
+
+  // PR 판정: 무게 기준, 유산소는 duration 기준
+  const allWeights = sorted.map(r=>r.weight||0);
+  const maxWeight  = Math.max(...allWeights);
+  const isPR = (last.weight||0) >= maxWeight && sorted.length > 1;
+
+  // 연속 동일 기록 횟수 (최근부터 역순)
+  let streak = 1;
+  for (let i=sorted.length-2; i>=0; i--) {
+    const a=sorted[i], b=sorted[i+1];
+    if (a.weight===b.weight && a.reps===b.reps) streak++;
+    else break;
+  }
+  const shouldIncrease = streak >= 3;
+
+  // 직전 대비 변화
+  let trend = null;
+  if (sorted.length >= 2) {
+    const prev = sorted[sorted.length-2];
+    const wDiff = (last.weight||0) - (prev.weight||0);
+    const rDiff = (last.reps||0) - (prev.reps||0);
+    if (wDiff > 0 || (wDiff === 0 && rDiff > 0)) trend = "up";
+    else if (wDiff < 0 || rDiff < 0) trend = "down";
+    else trend = "same";
+  }
+
+  return { last, isPR: isPR && trend==="up", shouldIncrease, trend, streak };
+}
+
+// 운동 로그 시트 컴포넌트
+function LogSheet({ exKey, records, onSave, onClose }) {
+  const cardio     = isCardio(exKey);
+  const bodyweight = isBodyweight(exKey);
+  const sorted     = records ? [...records].sort((a,b)=>a.date.localeCompare(b.date)) : [];
+  const lastRec    = sorted[sorted.length-1];
+
+  const [weight,   setWeight]   = useState(lastRec?.weight  ?? "");
+  const [reps,     setReps]     = useState(lastRec?.reps    ?? "");
+  const [sets,     setSets]     = useState(lastRec?.sets    ?? "");
+  const [duration, setDuration] = useState(lastRec?.duration ?? "");
+
+  const handleSave = () => {
+    const entry = {
+      date: new Date().toISOString().slice(0,10),
+      ...(cardio
+        ? { duration: parseFloat(duration)||0 }
+        : {
+            weight:   bodyweight ? 0 : (parseFloat(weight)||0),
+            reps:     parseInt(reps)||0,
+            sets:     parseInt(sets)||0,
+          }),
+    };
+    onSave(entry);
+  };
+
+  return (
+    <div style={{ position:"fixed",inset:0,background:"rgba(0,0,0,0.45)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:1001 }}
+      onClick={onClose}>
+      <div style={{ background:"#fff",borderRadius:"20px 20px 0 0",padding:"20px 20px 36px",width:"100%",maxWidth:480 }}
+        onClick={e=>e.stopPropagation()}>
+        <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14 }}>
+          <div style={{ fontSize:15,fontWeight:700 }}>{exName(exKey)} 기록</div>
+          <button onClick={onClose} style={{ border:"none",background:"none",fontSize:20,cursor:"pointer",color:"#aaa",lineHeight:1 }}>×</button>
+        </div>
+
+        {/* 이전 기록 */}
+        {sorted.length > 0 && (
+          <div style={{ background:"#f8f8f8",borderRadius:10,padding:"10px 14px",marginBottom:14,fontSize:12 }}>
+            <div style={{ color:"#aaa",marginBottom:4 }}>이전 기록 (최근 3회)</div>
+            {sorted.slice(-3).reverse().map((r,i)=>(
+              <div key={i} style={{ display:"flex",justifyContent:"space-between",color:i===0?"#1a1a1a":"#bbb",fontWeight:i===0?600:400,marginBottom:2 }}>
+                <span>{r.date.slice(5)}</span>
+                <span>
+                  {cardio ? `${r.duration}분`
+                    : bodyweight ? `${r.sets}세트 × ${r.reps}회`
+                    : `${r.weight}kg × ${r.reps}회 × ${r.sets}세트`}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* 입력 */}
+        {cardio ? (
+          <div style={{ marginBottom:14 }}>
+            <div style={{ fontSize:11,color:"#aaa",marginBottom:6 }}>운동 시간 (분)</div>
+            <input type="number" value={duration} onChange={e=>setDuration(e.target.value)} placeholder="예: 35"
+              style={{ width:"100%",border:"1.5px solid #e0e0e0",borderRadius:10,padding:"12px",fontSize:16,boxSizing:"border-box",outline:"none",textAlign:"center" }}/>
+          </div>
+        ) : (
+          <div style={{ display:"grid", gridTemplateColumns: bodyweight?"1fr 1fr":"1fr 1fr 1fr", gap:10, marginBottom:14 }}>
+            {!bodyweight && (
+              <div>
+                <div style={{ fontSize:11,color:"#aaa",marginBottom:6 }}>무게 (kg)</div>
+                <input type="number" step="0.5" value={weight} onChange={e=>setWeight(e.target.value)} placeholder="0"
+                  style={{ width:"100%",border:"1.5px solid #e0e0e0",borderRadius:10,padding:"12px",fontSize:16,boxSizing:"border-box",outline:"none",textAlign:"center" }}/>
+              </div>
+            )}
+            <div>
+              <div style={{ fontSize:11,color:"#aaa",marginBottom:6 }}>횟수 (회)</div>
+              <input type="number" value={reps} onChange={e=>setReps(e.target.value)} placeholder="0"
+                style={{ width:"100%",border:"1.5px solid #e0e0e0",borderRadius:10,padding:"12px",fontSize:16,boxSizing:"border-box",outline:"none",textAlign:"center" }}/>
+            </div>
+            <div>
+              <div style={{ fontSize:11,color:"#aaa",marginBottom:6 }}>세트</div>
+              <input type="number" value={sets} onChange={e=>setSets(e.target.value)} placeholder="3"
+                style={{ width:"100%",border:"1.5px solid #e0e0e0",borderRadius:10,padding:"12px",fontSize:16,boxSizing:"border-box",outline:"none",textAlign:"center" }}/>
+            </div>
+          </div>
+        )}
+
+        <button onClick={handleSave} style={{ width:"100%",background:"#1a1a1a",color:"#fff",border:"none",borderRadius:12,padding:"14px",fontSize:14,fontWeight:700,cursor:"pointer" }}>
+          기록 저장
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── 운동 행 컴포넌트 ────────────────────────────────────
-function ExRow({ exKey, pKey, checked, onToggle, onSwapClick, isSwapped }) {
-  const ex   = EX[exKey];
-  const sets = ex?.sets?.[pKey] || "";
-  const tw   = ex?.tw?.[pKey] || null;
-  const name = exName(exKey);
-  const link = ytLink(exKey);
+function ExRow({ exKey, pKey, checked, onToggle, onSwapClick, isSwapped, overload, onLogClick }) {
+  const ex    = EX[exKey];
+  const sets  = ex?.sets?.[pKey] || "";
+  const tw    = ex?.tw?.[pKey] || null;
+  const name  = exName(exKey);
+  const link  = ytLink(exKey);
   const group = EX_GROUP[exKey];
+  const cardio= isCardio(exKey);
+
+  const trendIcon  = overload?.trend==="up" ? "↑" : overload?.trend==="down" ? "↓" : overload?.trend==="same" ? "→" : null;
+  const trendColor = overload?.trend==="up" ? "#2d7a4f" : overload?.trend==="down" ? "#c0392b" : "#aaa";
+
+  const lastLabel = overload?.last
+    ? cardio
+      ? `${overload.last.duration}분`
+      : isBodyweight(exKey)
+        ? `${overload.last.sets}×${overload.last.reps}회`
+        : `${overload.last.weight}kg×${overload.last.reps}회`
+    : null;
 
   return (
     <div style={{
@@ -241,6 +384,8 @@ function ExRow({ exKey, pKey, checked, onToggle, onSwapClick, isSwapped }) {
             textDecoration:checked?"line-through":"none",
             cursor:"pointer",
           }}>{name}</span>
+          {overload?.isPR && <span style={{ fontSize:9,color:"#b07d30",background:"#fdf5e6",borderRadius:8,padding:"1px 6px",fontWeight:700 }}>🏆 PR</span>}
+          {overload?.shouldIncrease && !overload?.isPR && <span style={{ fontSize:9,color:"#c0392b",background:"#fee",borderRadius:8,padding:"1px 6px",fontWeight:700 }}>무게 올릴 때!</span>}
           {isSwapped && <span style={{ fontSize:9, color:"#4a90d9", background:"#eef5fd", borderRadius:8, padding:"1px 6px" }}>교체됨</span>}
           {link && (
             <a href={link} target="_blank" rel="noreferrer" style={{
@@ -251,18 +396,32 @@ function ExRow({ exKey, pKey, checked, onToggle, onSwapClick, isSwapped }) {
             }}>▶ 유튜브</a>
           )}
         </div>
-        <div style={{ fontSize:11, color:"#aaa", marginTop:2 }}>
+        <div style={{ fontSize:11, color:"#aaa", marginTop:2, display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
           {sets && <span>{sets}</span>}
-          {tw && <span style={{ color:"#4a90d9", marginLeft:6 }}>· 목표 {tw}</span>}
+          {tw && <span style={{ color:"#4a90d9" }}>· 목표 {tw}</span>}
+          {lastLabel && (
+            <span style={{ color:trendColor, fontWeight:600 }}>
+              {trendIcon} 지난번 {lastLabel}
+            </span>
+          )}
         </div>
       </div>
-      {group && onSwapClick && (
-        <button onClick={onSwapClick} style={{
-          flexShrink:0, border:"1px solid #e0e0e0", background:"#fff",
-          borderRadius:8, padding:"3px 8px", fontSize:10, cursor:"pointer",
-          color:"#666", marginTop:1, whiteSpace:"nowrap",
-        }}>교체</button>
-      )}
+      <div style={{ display:"flex", flexDirection:"column", gap:4, flexShrink:0, marginTop:1 }}>
+        {onLogClick && (
+          <button onClick={onLogClick} style={{
+            border:"1px solid #2d7a4f", background: overload?.last?"#eaf7f0":"#fff",
+            borderRadius:8, padding:"3px 8px", fontSize:10, cursor:"pointer",
+            color:"#2d7a4f", whiteSpace:"nowrap", fontWeight:600,
+          }}>📝 기록</button>
+        )}
+        {group && onSwapClick && (
+          <button onClick={onSwapClick} style={{
+            border:"1px solid #e0e0e0", background:"#fff",
+            borderRadius:8, padding:"3px 8px", fontSize:10, cursor:"pointer",
+            color:"#666", whiteSpace:"nowrap",
+          }}>교체</button>
+        )}
+      </div>
     </div>
   );
 }
@@ -347,7 +506,9 @@ export default function App() {
   const [goalWeightInput, setGoalWeightInput] = useState("");
   const [savedGoalWeight, setSavedGoalWeight] = useState(()=>load("fit6gw",null));
   const [swaps, setSwaps]       = useState(()=>load("fit6sw",{}));
-  const [swapSlot, setSwapSlot] = useState(null); // {dayKey, index, exKey, currentKeys, pKey}
+  const [swapSlot, setSwapSlot] = useState(null);
+  const [prLog, setPrLog]       = useState(()=>load("fit6log",{}));
+  const [logTarget, setLogTarget] = useState(null); // exKey
 
   const today       = new Date();
   const todayKey    = dateKey(today);
@@ -384,6 +545,11 @@ export default function App() {
 
   const swapKey = (dayKey, index) => `${dayKey}_${index}`;
   const resolveKey = (dayKey, index, originalKey) => swaps[swapKey(dayKey, index)] || originalKey;
+  const saveLog = (exKey, entry) => {
+    const next = { ...prLog, [exKey]: [...(prLog[exKey]||[]).filter(r=>r.date!==entry.date), entry].sort((a,b)=>a.date.localeCompare(b.date)) };
+    setPrLog(next); save("fit6log", next); setLogTarget(null);
+  };
+
   const doSwap = (newKey) => {
     if (!swapSlot) return;
     const k = swapKey(swapSlot.dayKey, swapSlot.index);
@@ -457,6 +623,8 @@ export default function App() {
                         onToggle={()=>toggleCheck(todayKey,i)}
                         isSwapped={resolvedKey !== origKey}
                         onSwapClick={()=>setSwapSlot({dayKey:todayKey, index:i, exKey:resolvedKey, originalKey:origKey, currentKeys:resolvedKeys, pKey:currentPhase.pKey})}
+                        overload={getOverloadStatus(prLog[resolvedKey])}
+                        onLogClick={()=>setLogTarget(resolvedKey)}
                       />
                     );
                   })}
@@ -536,6 +704,8 @@ export default function App() {
                               onToggle={()=>toggleCheck(dKey,i)}
                               isSwapped={resolvedKey !== origKey}
                               onSwapClick={()=>setSwapSlot({dayKey:dKey, index:i, exKey:resolvedKey, originalKey:origKey, currentKeys:resolvedKeys, pKey:ph.pKey})}
+                              overload={getOverloadStatus(prLog[resolvedKey])}
+                              onLogClick={()=>setLogTarget(resolvedKey)}
                             />
                           );
                         })}
@@ -771,6 +941,16 @@ export default function App() {
           </div>
         )}
       </div>
+
+      {/* 기록 입력 시트 */}
+      {logTarget && (
+        <LogSheet
+          exKey={logTarget}
+          records={prLog[logTarget]||[]}
+          onSave={(entry)=>saveLog(logTarget,entry)}
+          onClose={()=>setLogTarget(null)}
+        />
+      )}
 
       {/* 운동 교체 시트 */}
       {swapSlot && (
