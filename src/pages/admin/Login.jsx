@@ -46,7 +46,8 @@ export default function AdminLogin() {
           </button>
         </form>
         <div className="hint-box">
-          최초 관리자 계정: <strong>admin</strong> / 초기 비밀번호는 서버 콘솔 로그를 확인하세요. 로그인 후 반드시 비밀번호를 변경해 주세요.
+          관리자 계정: <strong>admin</strong> / <strong>admin1234</strong><br />
+          (백엔드 서버가 연결된 환경에서는 서버 콘솔에 출력된 초기 비밀번호를 사용하세요. 별도 백엔드 없이 접속한 경우 브라우저에 저장되는 데모 모드로 동작합니다.)
         </div>
       </div>
     </div>
