@@ -1,0 +1,156 @@
+/*
+ * Typography — 16 styles from docs/edm-design-system.md §2, tokenized as classes.
+ * Mobile-first: base rules below use the Mobile size (<=767px), and the
+ * `@media (min-width: 768px)` block swaps in the PC size, per PROJECT_SPEC §5.2
+ * ("767px 이하는 Mobile 값, 768px 이상은 PC 값을 쓴다").
+ * Letter-spacing is applied the same at both sizes (per the same section).
+ */
+
+.t-display {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.t-h1-bold {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.t-h2-bold {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.t-h2-semibold {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.t-h2-regular {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+}
+
+.t-h3-bold {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-h3-semibold {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-h4-bold {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-h4-regular {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-h5-bold {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-h5-regular {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-body1-bold {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-body1-regular {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-body2-semibold {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-body2-regular {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.t-detail {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .t-display {
+    font-size: 54px;
+  }
+  .t-h1-bold {
+    font-size: 40px;
+  }
+  .t-h2-bold,
+  .t-h2-semibold,
+  .t-h2-regular {
+    font-size: 32px;
+  }
+  .t-h3-bold,
+  .t-h3-semibold {
+    font-size: 26px;
+  }
+  .t-h4-bold,
+  .t-h4-regular {
+    font-size: 22px;
+  }
+  .t-h5-bold,
+  .t-h5-regular {
+    font-size: 20px;
+  }
+  .t-body1-bold,
+  .t-body1-regular {
+    font-size: 18px;
+  }
+  .t-body2-semibold,
+  .t-body2-regular {
+    font-size: 16px;
+  }
+  .t-detail {
+    font-size: 14px;
+  }
+}

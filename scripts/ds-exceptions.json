@@ -1,0 +1,50 @@
+[
+  {
+    "property": "gap",
+    "value": "96px",
+    "section": "edm-design-system.md §8-11 (Header)",
+    "reason": "로고↔GNB 간격 96px은 DS가 헤더 컴포넌트 스펙으로 직접 명시한 값 (PROJECT_SPEC §7 S1)"
+  },
+  {
+    "property": "padding",
+    "value": "5px 12px",
+    "section": "edm-design-system.md §8-1 (Button)",
+    "reason": "Button size=2X-small의 DS 지정 padding"
+  },
+  {
+    "property": "padding",
+    "value": "10px 20px",
+    "section": "edm-design-system.md §8-1 (Button)",
+    "reason": "Button size=Small의 DS 지정 padding"
+  },
+  {
+    "property": "padding",
+    "value": "14.5px 16px",
+    "section": "edm-design-system.md §8-2 (Input)",
+    "reason": "Input size=Large의 DS 지정 padding"
+  },
+  {
+    "property": "padding",
+    "value": "10px 16px",
+    "section": "edm-design-system.md §8-2 (Input)",
+    "reason": "Input size=Small의 DS 지정 padding"
+  },
+  {
+    "property": "padding",
+    "value": "7px 16px",
+    "section": "edm-design-system.md §8-5 (Tab01)",
+    "reason": "Tab01 Mobile의 DS 지정 padding"
+  },
+  {
+    "property": "padding",
+    "value": "2px 14px",
+    "section": "edm-design-system.md §8-6 (Carousel_mobile)",
+    "reason": "Carousel_mobile pill의 DS 지정 padding"
+  },
+  {
+    "property": "padding-bottom",
+    "value": "88px",
+    "section": "edm-design-system.md §8-13 (Floating Ad Mobile) / PROJECT_SPEC §11",
+    "reason": "모바일 하단 고정 CTA 바 높이(88px)만큼 body 여백을 확보"
+  }
+]

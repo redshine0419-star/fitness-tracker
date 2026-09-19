@@ -1,0 +1,137 @@
+/*
+ * Design tokens — copied 1:1 from docs/edm-design-system.md (§1 Color, §4 Spacing,
+ * §5 Radius, §6 Shadow, §9 Z-index) plus the small set of extension tokens defined
+ * in docs/PROJECT_SPEC.md §5.4.
+ *
+ * This file is the ONLY place hex color literals and raw shadow/z-index values are
+ * allowed to live (see scripts/check-tokens.mjs). Everything else must reference
+ * these custom properties.
+ */
+
+:root {
+  /* ---------------------------------------------------------------------
+   * §1 Color — Primary / Green
+   * ------------------------------------------------------------------- */
+  --green-50: #ecfbf2;
+  --green-100: #d2f4de;
+  --green-200: #a5e9bd;
+  --green-300: #78df9d;
+  --green-400: #4bd47c;
+  --green-500: #1ec95b;
+  --green-600: #18a149;
+  --green-700: #127937;
+  --green-800: #0c5024;
+
+  /* Point / Red */
+  --red-500: #fc1d01;
+  --red-600: #ca1701;
+
+  /* Blue */
+  --blue-500: #0086fa;
+  --blue-600: #006bc8;
+
+  /* Neutrals */
+  --neutral-50: #f5f5f7;
+  --neutral-100: #e2e2e5;
+  --neutral-200: #cccccc;
+  --neutral-300: #c5c5c5;
+  --neutral-400: #999999;
+  --neutral-500: #666666;
+  --neutral-600: #333333;
+  --neutral-black: #000000;
+
+  /* Semantic tokens */
+  --color-brand-primary: var(--green-500);
+  --color-brand-point: var(--red-500);
+  --color-bg-default: var(--neutral-50);
+  --color-bg-green: #f8faec;
+  --color-bg-blue: #eafaff;
+  --color-link-default: var(--blue-600);
+  --color-border-default: #dadada;
+  --color-border-light: #e4e8f1;
+  --text-01: var(--neutral-black);
+  --text-02: var(--neutral-600);
+  --text-03: var(--neutral-500);
+  --text-04: var(--neutral-400);
+
+  /* Gradients (defined only — not used on this page, DS §1) */
+  --gradient-red: linear-gradient(90deg, #fc1d01 0%, #fda245 100%);
+  --gradient-green: linear-gradient(90deg, #1ec95b 0%, #01d29c 100%);
+
+  /* ---------------------------------------------------------------------
+   * §4 Spacing — 4pt scale
+   * ------------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-15: 60px;
+  --space-20: 80px;
+  --space-25: 100px;
+  --space-30: 120px;
+
+  /* ---------------------------------------------------------------------
+   * §5 Border radius
+   * ------------------------------------------------------------------- */
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-24: 24px;
+  --radius-full: 9999px;
+
+  /* ---------------------------------------------------------------------
+   * §6 Shadow
+   * ------------------------------------------------------------------- */
+  --shadow-neutral-01: 0px 4px 10px 0px rgba(0, 0, 0, 0.04);
+  --shadow-neutral-02: 0px 8px 20px 0px rgba(0, 0, 0, 0.06);
+  --shadow-neutral-03: 0px 16px 40px 0px rgba(0, 0, 0, 0.08);
+  --shadow-blue-01: 0px 4px 10px 0px #ebeff4;
+  --shadow-blue-02: 0px 8px 20px 0px #ebeff4;
+  --shadow-blue-03: 0px 16px 40px 0px #ebeff4;
+
+  /* ---------------------------------------------------------------------
+   * §9 Z-index
+   * ------------------------------------------------------------------- */
+  --z-content: 0;
+  --z-header: 100;
+  --z-dropdown: 200;
+  --z-floating: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+
+  /* ---------------------------------------------------------------------
+   * PROJECT_SPEC §5.4 — extension tokens (not in the DS; each has a reason)
+   * ------------------------------------------------------------------- */
+  /* Hero photo legibility overlay for white text (same color family as DS Modal overlay) */
+  --overlay-hero: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+  /* Contrast escape hatch (§5.5) — change this ONE variable if the org decides to switch off DS default */
+  --btn-primary-text: #ffffff;
+  /* Contrast escape hatch (§5.5) — change to var(--green-700) if the org decides to switch off DS default */
+  --text-accent: var(--green-500);
+  /* Border/White button hover background on dark hero photos */
+  --hover-on-dark: rgba(255, 255, 255, 0.15);
+  /* DS §0 "캔버스: 항상 흰 배경" — DS는 이 흰색에 별도 토큰명을 두지 않아 시맨틱 토큰으로 확장 */
+  --color-bg-white: #ffffff;
+  /* Modal overlay — DS §8-8 "overlay: rgba(0,0,0,0.5)"을 토큰화 */
+  --overlay-modal: rgba(0, 0, 0, 0.5);
+
+  /* Section-to-section gaps (DS §4 "섹션 간 간격" table, tokenized). Mobile-first:
+     base values below are Mobile; overridden for >=768px in grid.css media query. */
+  --section-gap-sm: 40px;
+  --section-gap-md: 60px;
+  --section-gap-lg: 100px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-gap-sm: 60px;
+    --section-gap-md: 80px;
+    --section-gap-lg: 140px;
+  }
+}

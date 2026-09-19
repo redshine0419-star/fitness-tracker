@@ -1,0 +1,106 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./grid.css";
+
+/* ---------------------------------------------------------------------
+ * Reset
+ * ------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------
+ * Base document — PROJECT_SPEC §5.2
+ * ------------------------------------------------------------------- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    var(--font-pretendard),
+    -apple-system,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    sans-serif;
+  color: var(--text-02);
+  background: var(--color-bg-white);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* Mobile CTA bar (S12) is fixed at the bottom on mobile; keep footer content
+   from being hidden behind it. PROJECT_SPEC §11. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 88px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Focus ring — PROJECT_SPEC §8 "DS에 값이 없어 이 문서에서 정한 기본값"
+ * ------------------------------------------------------------------- */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------
+ * Motion — PROJECT_SPEC §10
+ * ------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

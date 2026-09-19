@@ -1,0 +1,49 @@
+/*
+ * Grid — DS §3 "repeat(N, 1fr)" CSS Grid approach (Flexbox column layout is not
+ * used, per DS §3 warning). Breakpoints follow PROJECT_SPEC §5.3, which adds a
+ * "Desktop-S" (1024–1439) tier the DS itself does not define.
+ */
+
+:root {
+  /* Mobile: <=767 */
+  --grid-columns: 6;
+  --grid-gutter: var(--space-2);
+  --page-margin: var(--space-4);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: var(--space-4);
+    --page-margin: var(--space-10);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  :root {
+    /* Desktop-S — PROJECT_SPEC §5.3 보완 규칙 (DS has no 1024–1439 tier) */
+    --grid-columns: 12;
+    --grid-gutter: var(--space-6);
+    --page-margin: var(--space-6);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: var(--space-6);
+    --page-margin: var(--space-30);
+  }
+}
+
+.container {
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+}
