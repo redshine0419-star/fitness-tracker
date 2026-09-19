@@ -1,3 +1,5 @@
+import { mock } from './mockApi.js'
+
 const TOKEN_KEY = 'gh_admin_token'
 
 export function getToken() {
@@ -9,6 +11,12 @@ export function setToken(token) {
   else localStorage.removeItem(TOKEN_KEY)
 }
 
+// Thrown when the /api/* backend isn't actually reachable (network failure,
+// or a static-only deployment where /api/* falls through to the SPA's own
+// index.html). Callers use it to fall back to the client-only demo data in
+// mockApi.js instead of surfacing a confusing error.
+class NoBackendError extends Error {}
+
 async function request(path, { method = 'GET', body, auth = false } = {}) {
   const headers = {}
   if (body) headers['Content-Type'] = 'application/json'
@@ -16,55 +24,99 @@ async function request(path, { method = 'GET', body, auth = false } = {}) {
     const token = getToken()
     if (token) headers.Authorization = `Bearer ${token}`
   }
-  const res = await fetch(`/api${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  })
+  let res
+  try {
+    res = await fetch(`/api${path}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  } catch {
+    throw new NoBackendError('network unreachable')
+  }
   const isJson = res.headers.get('content-type')?.includes('application/json')
-  const data = isJson ? await res.json() : null
+  if (!isJson) {
+    throw new NoBackendError('non-json response')
+  }
+  const data = await res.json()
   if (!res.ok) {
     throw new Error(data?.error || `요청에 실패했습니다. (${res.status})`)
   }
   return data
 }
 
+async function withDemoFallback(realCall, mockCall) {
+  try {
+    return await realCall()
+  } catch (err) {
+    if (err instanceof NoBackendError) {
+      return mockCall()
+    }
+    throw err
+  }
+}
+
 export const api = {
-  login: (username, password) => request('/auth/login', { method: 'POST', body: { username, password } }),
+  login: (username, password) =>
+    withDemoFallback(
+      () => request('/auth/login', { method: 'POST', body: { username, password } }),
+      () => mock.login(username, password)
+    ),
   changePassword: (currentPassword, newPassword) =>
-    request('/auth/change-password', { method: 'POST', auth: true, body: { currentPassword, newPassword } }),
-  me: () => request('/auth/me', { auth: true }),
+    withDemoFallback(
+      () => request('/auth/change-password', { method: 'POST', auth: true, body: { currentPassword, newPassword } }),
+      () => mock.changePassword(currentPassword, newPassword)
+    ),
+  me: () => withDemoFallback(() => request('/auth/me', { auth: true }), () => mock.me()),
 
   banners: {
-    list: () => request('/banners'),
-    listAdmin: () => request('/banners/admin', { auth: true }),
-    create: (data) => request('/banners', { method: 'POST', auth: true, body: data }),
-    update: (id, data) => request(`/banners/${id}`, { method: 'PUT', auth: true, body: data }),
-    remove: (id) => request(`/banners/${id}`, { method: 'DELETE', auth: true }),
+    list: () => withDemoFallback(() => request('/banners'), () => mock.banners.list()),
+    listAdmin: () => withDemoFallback(() => request('/banners/admin', { auth: true }), () => mock.banners.listAdmin()),
+    create: (data) =>
+      withDemoFallback(() => request('/banners', { method: 'POST', auth: true, body: data }), () => mock.banners.create(data)),
+    update: (id, data) =>
+      withDemoFallback(() => request(`/banners/${id}`, { method: 'PUT', auth: true, body: data }), () => mock.banners.update(id, data)),
+    remove: (id) => withDemoFallback(() => request(`/banners/${id}`, { method: 'DELETE', auth: true }), () => mock.banners.remove(id)),
   },
 
   programs: {
-    list: (category) => request(`/programs${category ? `?category=${encodeURIComponent(category)}` : ''}`),
-    listAdmin: () => request('/programs/admin', { auth: true }),
-    get: (id) => request(`/programs/${id}`),
-    create: (data) => request('/programs', { method: 'POST', auth: true, body: data }),
-    update: (id, data) => request(`/programs/${id}`, { method: 'PUT', auth: true, body: data }),
-    remove: (id) => request(`/programs/${id}`, { method: 'DELETE', auth: true }),
+    list: (category) =>
+      withDemoFallback(
+        () => request(`/programs${category ? `?category=${encodeURIComponent(category)}` : ''}`),
+        () => mock.programs.list(category)
+      ),
+    listAdmin: () => withDemoFallback(() => request('/programs/admin', { auth: true }), () => mock.programs.listAdmin()),
+    get: (id) => withDemoFallback(() => request(`/programs/${id}`), () => mock.programs.get(id)),
+    create: (data) =>
+      withDemoFallback(() => request('/programs', { method: 'POST', auth: true, body: data }), () => mock.programs.create(data)),
+    update: (id, data) =>
+      withDemoFallback(() => request(`/programs/${id}`, { method: 'PUT', auth: true, body: data }), () => mock.programs.update(id, data)),
+    remove: (id) => withDemoFallback(() => request(`/programs/${id}`, { method: 'DELETE', auth: true }), () => mock.programs.remove(id)),
   },
 
   news: {
-    list: (category) => request(`/news${category ? `?category=${encodeURIComponent(category)}` : ''}`),
-    listAdmin: () => request('/news/admin', { auth: true }),
-    get: (id) => request(`/news/${id}`),
-    create: (data) => request('/news', { method: 'POST', auth: true, body: data }),
-    update: (id, data) => request(`/news/${id}`, { method: 'PUT', auth: true, body: data }),
-    remove: (id) => request(`/news/${id}`, { method: 'DELETE', auth: true }),
+    list: (category) =>
+      withDemoFallback(
+        () => request(`/news${category ? `?category=${encodeURIComponent(category)}` : ''}`),
+        () => mock.news.list(category)
+      ),
+    listAdmin: () => withDemoFallback(() => request('/news/admin', { auth: true }), () => mock.news.listAdmin()),
+    get: (id) => withDemoFallback(() => request(`/news/${id}`), () => mock.news.get(id)),
+    create: (data) =>
+      withDemoFallback(() => request('/news', { method: 'POST', auth: true, body: data }), () => mock.news.create(data)),
+    update: (id, data) =>
+      withDemoFallback(() => request(`/news/${id}`, { method: 'PUT', auth: true, body: data }), () => mock.news.update(id, data)),
+    remove: (id) => withDemoFallback(() => request(`/news/${id}`, { method: 'DELETE', auth: true }), () => mock.news.remove(id)),
   },
 
   inquiries: {
-    submit: (data) => request('/inquiries', { method: 'POST', body: data }),
-    list: () => request('/inquiries', { auth: true }),
-    updateStatus: (id, status) => request(`/inquiries/${id}`, { method: 'PATCH', auth: true, body: { status } }),
-    remove: (id) => request(`/inquiries/${id}`, { method: 'DELETE', auth: true }),
+    submit: (data) => withDemoFallback(() => request('/inquiries', { method: 'POST', body: data }), () => mock.inquiries.submit(data)),
+    list: () => withDemoFallback(() => request('/inquiries', { auth: true }), () => mock.inquiries.list()),
+    updateStatus: (id, status) =>
+      withDemoFallback(
+        () => request(`/inquiries/${id}`, { method: 'PATCH', auth: true, body: { status } }),
+        () => mock.inquiries.updateStatus(id, status)
+      ),
+    remove: (id) => withDemoFallback(() => request(`/inquiries/${id}`, { method: 'DELETE', auth: true }), () => mock.inquiries.remove(id)),
   },
 }
