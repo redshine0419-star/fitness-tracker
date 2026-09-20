@@ -49,7 +49,12 @@ export function Header() {
   }
 
   return (
-    <header id="gnb" className={styles.header} data-scrolled={scrolled || undefined}>
+    <header
+      id="gnb"
+      className={styles.header}
+      data-scrolled={scrolled || undefined}
+      onMouseLeave={closeMenu}
+    >
       <div className={`container ${styles.bar}`}>
         <div className={styles.left}>
           <Link href="/" className={styles.logo}>
@@ -63,7 +68,6 @@ export function Header() {
                   key={item.label}
                   className={styles.navItem}
                   onMouseEnter={() => scheduleOpen(item.label)}
-                  onMouseLeave={closeMenu}
                   onFocus={() => setOpenId(item.label)}
                   onBlur={(event) => {
                     if (!event.currentTarget.contains(event.relatedTarget as Node)) closeMenu();
