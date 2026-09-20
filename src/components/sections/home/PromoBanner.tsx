@@ -16,6 +16,9 @@ export function PromoBanner({ href, image, title, description }: PromoBannerProp
       <Banner
         href={href}
         image={image}
+        trackCategory="main_banner"
+        trackAction="banner_click"
+        trackLabel={title}
         overlayText={
           <div className={styles.overlayText}>
             <p className="t-h4-bold">{title}</p>

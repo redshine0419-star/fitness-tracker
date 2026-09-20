@@ -39,6 +39,9 @@ export function FeaturedVideo({ videoId, thumbnail, category, title, description
             className={styles.facadeButton}
             onClick={() => setPlaying(true)}
             aria-label={`영상 재생: ${title}`}
+            data-track-cat="main_featured"
+            data-track-action="play"
+            data-track-label={title}
           >
             <Picture image={thumbnail} className={styles.thumbnail} />
             <span className={styles.playCircle}>
@@ -56,10 +59,25 @@ export function FeaturedVideo({ videoId, thumbnail, category, title, description
         <h3 className="t-h3-bold">{title}</h3>
         <p className="t-body1-regular">{description}</p>
         <div className={styles.buttons}>
-          <Button href="/coming-soon/story/videos" styleVariant="border" color="secondary" shape="square">
+          <Button
+            href="/coming-soon/story/videos"
+            styleVariant="border"
+            color="secondary"
+            shape="square"
+            data-track-cat="main_featured"
+            data-track-action="cta_more"
+            data-track-label={title}
+          >
             자세히 보기
           </Button>
-          <Button href="/coming-soon/donate" shape="square">
+          <Button
+            href="/coming-soon/donate"
+            shape="square"
+            data-track-cat="main_featured"
+            data-track-action="cta_donate"
+            data-track-label={title}
+            data-track-extra='{"cta_type":"donate"}'
+          >
             후원하기
           </Button>
         </div>

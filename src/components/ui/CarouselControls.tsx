@@ -19,6 +19,9 @@ interface CarouselPcControlsProps {
   onNext: () => void;
   onTogglePlay: () => void;
   labelPrefix: string;
+  /** PROJECT_SPEC §12 분석 표 — main_hero: control_prev/control_next/control_pause */
+  trackCategory?: string;
+  trackLabel?: string;
 }
 
 export function CarouselPcControls({
@@ -29,6 +32,8 @@ export function CarouselPcControls({
   onNext,
   onTogglePlay,
   labelPrefix,
+  trackCategory,
+  trackLabel,
 }: CarouselPcControlsProps) {
   return (
     <div className={styles.pcControls}>
@@ -40,9 +45,26 @@ export function CarouselPcControls({
         icon={playing ? <PauseIcon /> : <PlayIcon />}
         aria-label={playing ? `${labelPrefix} 일시정지` : `${labelPrefix} 재생`}
         onClick={onTogglePlay}
+        data-track-cat={trackCategory}
+        data-track-action="control_pause"
+        data-track-label={trackLabel}
       />
-      <IconButton icon={<CarouselLeftIcon />} aria-label={`${labelPrefix} 이전`} onClick={onPrev} />
-      <IconButton icon={<CarouselRightIcon />} aria-label={`${labelPrefix} 다음`} onClick={onNext} />
+      <IconButton
+        icon={<CarouselLeftIcon />}
+        aria-label={`${labelPrefix} 이전`}
+        onClick={onPrev}
+        data-track-cat={trackCategory}
+        data-track-action="control_prev"
+        data-track-label={trackLabel}
+      />
+      <IconButton
+        icon={<CarouselRightIcon />}
+        aria-label={`${labelPrefix} 다음`}
+        onClick={onNext}
+        data-track-cat={trackCategory}
+        data-track-action="control_next"
+        data-track-label={trackLabel}
+      />
     </div>
   );
 }
@@ -70,6 +92,8 @@ interface CarouselIndicatorPillProps {
   onPrev: () => void;
   onNext: () => void;
   labelPrefix: string;
+  /** PROJECT_SPEC §12 분석 표 — main_campaign: page_prev/page_next */
+  trackCategory?: string;
 }
 
 export function CarouselIndicatorPill({
@@ -78,6 +102,7 @@ export function CarouselIndicatorPill({
   onPrev,
   onNext,
   labelPrefix,
+  trackCategory,
 }: CarouselIndicatorPillProps) {
   return (
     <div className={styles.indicatorPill}>
@@ -91,6 +116,8 @@ export function CarouselIndicatorPill({
         className={styles.indicatorArrow}
         aria-label={`${labelPrefix} 이전`}
         onClick={onPrev}
+        data-track-cat={trackCategory}
+        data-track-action="page_prev"
       >
         <CarouselLeftIcon className={styles.smallArrowIcon} />
       </button>
@@ -99,6 +126,8 @@ export function CarouselIndicatorPill({
         className={styles.indicatorArrow}
         aria-label={`${labelPrefix} 다음`}
         onClick={onNext}
+        data-track-cat={trackCategory}
+        data-track-action="page_next"
       >
         <CarouselRightIcon className={styles.smallArrowIcon} />
       </button>
@@ -110,11 +139,21 @@ export function CarouselIndicatorPill({
 interface PlusButtonProps {
   href: string;
   "aria-label": string;
+  trackCategory?: string;
+  trackAction?: string;
+  trackLabel?: string;
 }
 
-export function PlusButton({ href, ...rest }: PlusButtonProps) {
+export function PlusButton({ href, trackCategory, trackAction, trackLabel, ...rest }: PlusButtonProps) {
   return (
-    <Link href={href} className={styles.plusButton} aria-label={rest["aria-label"]}>
+    <Link
+      href={href}
+      className={styles.plusButton}
+      aria-label={rest["aria-label"]}
+      data-track-cat={trackCategory}
+      data-track-action={trackAction}
+      data-track-label={trackLabel}
+    >
       <PlusIcon />
     </Link>
   );

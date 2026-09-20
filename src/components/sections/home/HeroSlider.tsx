@@ -98,6 +98,9 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                       color="white"
                       shape="square"
                       size="md"
+                      data-track-cat="main_hero"
+                      data-track-action="cta_click"
+                      data-track-label={slide.title}
                     >
                       {slide.cta.label}
                     </Button>
@@ -119,6 +122,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             onNext={() => goTo(index + 1)}
             onTogglePlay={() => setUserPaused((v) => !v)}
             labelPrefix="대표 배너"
+            trackCategory="main_hero"
+            trackLabel={slides[index]?.title}
           />
         </div>
       </div>

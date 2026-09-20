@@ -9,6 +9,9 @@ interface SectionHeaderProps {
   description?: string;
   moreHref?: string;
   moreLabel?: string;
+  /** PROJECT_SPEC §12 분석 표 — 더보기 버튼에 붙일 track 속성 (표에 있는 경우만: 예 소식 more_click) */
+  moreTrackCategory?: string;
+  moreTrackAction?: string;
   /** Plus 버튼 대신 우측 상단에 넣을 커스텀 요소 (예: S6 캠페인의 인디케이터 pill) */
   actionSlot?: ReactNode;
   children?: ReactNode;
@@ -22,6 +25,8 @@ export function SectionHeader({
   description,
   moreHref,
   moreLabel,
+  moreTrackCategory,
+  moreTrackAction,
   actionSlot,
   children,
 }: SectionHeaderProps) {
@@ -38,7 +43,13 @@ export function SectionHeader({
       ) : (
         moreHref && (
           <div className={styles.moreSlot}>
-            <PlusButton href={moreHref} aria-label={moreLabel ?? `${title} 더보기`} />
+            <PlusButton
+              href={moreHref}
+              aria-label={moreLabel ?? `${title} 더보기`}
+              trackCategory={moreTrackCategory}
+              trackAction={moreTrackAction}
+              trackLabel={moreLabel}
+            />
           </div>
         )
       )}

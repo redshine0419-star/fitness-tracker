@@ -242,3 +242,42 @@ $ npm run verify
 **질문**: 없음
 
 ---
+
+## Step 6 — 기반 기능 (메타·JSON-LD·sitemap·robots, track()·GTM·Consent 기본값) (완료)
+
+**변경한 파일**
+- `src/lib/seo.ts` — `buildRootMetadata()`: title(`{name} | {tagline}`), description, `alternates.canonical`, `openGraph`(1200×630), `twitter`, 프로덕션에서만 `index,follow`(그 외 `noindex,nofollow`)
+- `src/app/layout.tsx` — `generateMetadata()`로 전환(`lib/seo.ts` 위임), GTM 로더(`NEXT_PUBLIC_GTM_ID` 있을 때만 `afterInteractive`) + Consent Mode 기본값(전부 `denied`, `beforeInteractive`) + noscript iframe, Organization/WebSite JSON-LD, `AnalyticsInit` 마운트
+- `src/app/page.tsx` — 홈 전용 WebPage JSON-LD 추가
+- `src/lib/jsonld.ts` — `organizationJsonLd()`(Organization+NGO), `websiteJsonLd()`, `webPageJsonLd()`. 값이 정확히 `'{{TODO}}'`인 필드는 출력에서 제외(`omitTodo()`)
+- `src/lib/analytics.ts` — `track({category,action,label,extra})`가 `dataLayer.push()`, `initAnalyticsClickDelegation()`이 문서 전역에서 `[data-track-cat]` 조상 요소를 찾아 한 번만 push
+- `src/components/common/AnalyticsInit.tsx`, `JsonLd.tsx`, `TrackedLink.tsx` — §4 디렉터리 구조가 요구하는 공용 컴포넌트 3종 신설
+- `src/app/sitemap.ts`, `robots.ts` — 사이트맵은 홈 1페이지만(나머지는 전부 noindex stub), robots는 프로덕션 외 전체 비색인 · 프로덕션은 `/coming-soon`·`/dev` disallow
+- `public/og-image.png` — OG 이미지(1200×630, placeholder 회색 단색 PNG, 새 의존성 없이 직접 인코딩해 생성)
+- `src/components/ui/CarouselControls.tsx`(`CarouselPcControls`/`CarouselIndicatorPill`/`PlusButton`), `Tab01.tsx`, `Card.tsx`(`Card`/`Banner`), `common/SectionHeader.tsx` — 여러 액션을 내부에 가진 컴포넌트에 `trackCategory`/`trackAction`/`trackLabel` prop 추가
+- `Header.tsx`, `MobileMenu.tsx`, `FloatingBar.tsx`, `Footer.tsx`와 홈 섹션 9개(`HeroSlider`~`Newsletter`) — §12 표에 정의된 모든 category/action/label을 `data-track-*` 속성(또는 Newsletter의 submit_success/submit_error처럼 클릭이 아닌 경우는 `track()` 직접 호출)으로 연결
+- `tests/e2e/analytics-seo.spec.ts` — JSON-LD에 `{{TODO}}` 미노출 검증, 뉴스레터 `submit_error` dataLayer push 검증, 캠페인 캐러셀 `page_next` dataLayer push 검증(문서 전역 click 위임 자체를 검증)
+- **버그 수정**: WebPage JSON-LD `name`에 전체 `<title>`(`{{TODO}} | ...`)을 쓰면 `{{TODO}}`가 부분 문자열로 구조화 데이터에 노출되는 것을 발견 → `tagline`만 사용하도록 수정 (DEVIATIONS #11)
+
+**검증 결과**
+```
+$ npx eslint . && npx tsc --noEmit && node scripts/check-tokens.mjs && npx next build
+✔ lint(0 warnings) / typecheck / check:tokens(34개 파일) 통과
+✔ build 성공 — /robots.txt, /sitemap.xml 정적 라우트로 생성 확인
+✔ 프로덕션 빌드 HTML 직접 검사: Organization/WebSite/WebPage JSON-LD 전부 유효 JSON, '{{TODO}}' 미노출
+✔ NEXT_PUBLIC_GTM_ID 설정/미설정 각각으로 재빌드 — 설정 시에만 GTM 로더+Consent 기본값+noscript iframe 렌더 확인
+
+$ PW_CHROMIUM_PATH=... npx playwright test
+✔ test:e2e — 45 tests, 39 passed, 6 skipped(뷰포트 조건부) — 0 failed
+```
+
+**스크린샷**: `docs/screenshots/step-6/{1920,768,360}.png` — Step 6은 비시각적 변경(메타데이터·구조화 데이터·분석)이라 화면은 Step 5와 동일합니다(회귀 없음 확인용).
+
+**DS와 다르게 한 점**
+- DEVIATIONS.md #11(WebPage JSON-LD name에서 tagline만 사용) 참고.
+- §12 표에 없는 링크(모바일 메뉴의 회원가입/기부금 영수증, Footer의 "관련 사이트" 드롭다운)는 추측으로 스키마를 만들지 않고 추적하지 않았습니다.
+- Consent Mode 기본값 스크립트는 `NEXT_PUBLIC_GTM_ID`가 있을 때만 렌더링합니다(§12 "GTM 로드 전에 설정"이 GTM 로드 자체를 전제하므로, GTM이 로드되지 않는 환경에서는 불필요한 스크립트를 추가하지 않는 쪽이 더 보수적이라고 판단).
+
+**질문**: 없음
+
+---

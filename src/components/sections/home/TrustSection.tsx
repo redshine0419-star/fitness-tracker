@@ -45,7 +45,15 @@ export function TrustSection({ intro, trust }: TrustSectionProps) {
             </p>
             <div className={styles.introButtons}>
               {intro.buttons.map((btn) => (
-                <Button key={btn.href + btn.label} href={btn.href} styleVariant="border" color="gray">
+                <Button
+                  key={btn.href + btn.label}
+                  href={btn.href}
+                  styleVariant="border"
+                  color="gray"
+                  data-track-cat="main_trust"
+                  data-track-action="link_click"
+                  data-track-label={btn.label}
+                >
                   {btn.label}
                 </Button>
               ))}

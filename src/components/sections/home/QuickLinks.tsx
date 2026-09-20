@@ -1,7 +1,7 @@
 import { BookOpen, Building2, Mail, Store, Users } from "lucide-react";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { CarouselRightIcon } from "@/components/icons/ds/CarouselRightIcon";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import styles from "./QuickLinks.module.css";
 
 type QuickLinkIcon = "book-open" | "mail" | "users" | "store" | "building";
@@ -26,13 +26,19 @@ export function QuickLinks({ links }: QuickLinksProps) {
       <ul className={styles.list}>
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className={styles.item}>
+            <TrackedLink
+              href={link.href}
+              className={styles.item}
+              trackCategory="main_quicklink"
+              trackAction="link_click"
+              trackLabel={link.label}
+            >
               <span className={styles.itemMain}>
                 {ICONS[link.icon]}
                 <span className="t-body1-bold">{link.label}</span>
               </span>
               <CarouselRightIcon className={styles.chevron} />
-            </Link>
+            </TrackedLink>
           </li>
         ))}
       </ul>

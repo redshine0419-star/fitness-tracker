@@ -109,7 +109,14 @@ export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
                         <ul className={styles.mobileGroupLinks}>
                           {group.links.map((link) => (
                             <li key={link.href}>
-                              <Link href={link.href} onClick={onClose} className={styles.mobileGroupLink}>
+                              <Link
+                                href={link.href}
+                                onClick={onClose}
+                                className={styles.mobileGroupLink}
+                                data-track-cat="header"
+                                data-track-action="gnb_click"
+                                data-track-label={link.label}
+                              >
                                 {link.label}
                               </Link>
                             </li>
@@ -136,7 +143,17 @@ export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
           </Link>
         </div>
 
-        <Button href="/coming-soon/donate" shape="square" size="lg" fullWidth onClick={onClose}>
+        <Button
+          href="/coming-soon/donate"
+          shape="square"
+          size="lg"
+          fullWidth
+          onClick={onClose}
+          data-track-cat="header"
+          data-track-action="donate_click"
+          data-track-label="후원하기"
+          data-track-extra='{"cta_type":"donate"}'
+        >
           후원하기
         </Button>
       </div>

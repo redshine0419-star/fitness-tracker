@@ -77,6 +77,7 @@ export function CampaignCarousel({ campaigns }: CampaignCarouselProps) {
               onPrev={() => emblaApi?.scrollPrev()}
               onNext={() => emblaApi?.scrollNext()}
               labelPrefix="캠페인"
+              trackCategory="main_campaign"
             />
           </div>
         }
@@ -92,6 +93,9 @@ export function CampaignCarousel({ campaigns }: CampaignCarouselProps) {
                 title={campaign.title}
                 description={campaign.description}
                 eyebrow={<Badge01 variant="border">{campaign.category}</Badge01>}
+                trackCategory="main_campaign"
+                trackAction="card_click"
+                trackLabel={campaign.title}
               />
             </div>
           ))}

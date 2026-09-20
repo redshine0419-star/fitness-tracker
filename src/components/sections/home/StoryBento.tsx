@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Picture } from "@/components/common/Picture";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import { Card } from "@/components/ui/Card";
 import { Tab01 } from "@/components/ui/Tab01";
 import type { StoryItem } from "@/content/types";
@@ -40,6 +40,7 @@ export function StoryBento({ tabs }: StoryBentoProps) {
             items={tabs.map((t) => ({ id: t.id, label: t.label }))}
             activeId={activeId}
             onChange={setActiveId}
+            trackCategory="main_story"
           />
         </div>
       </SectionHeader>
@@ -57,7 +58,13 @@ export function StoryBento({ tabs }: StoryBentoProps) {
             className={`grid ${styles.bento}`}
           >
             {big && (
-              <Link href={big.href} className={styles.bigCard}>
+              <TrackedLink
+                href={big.href}
+                className={styles.bigCard}
+                trackCategory="main_story"
+                trackAction="card_click"
+                trackLabel={big.title}
+              >
                 <div className={styles.bigImageWrap}>
                   <Picture image={big.image} className={styles.bigImage} />
                 </div>
@@ -65,11 +72,19 @@ export function StoryBento({ tabs }: StoryBentoProps) {
                   <h3 className="t-h4-bold">{big.title}</h3>
                   <span className={styles.detailLink}>자세히 보기</span>
                 </div>
-              </Link>
+              </TrackedLink>
             )}
             {small.map((item) => (
               <div key={item.href + item.title} className={styles.smallCard}>
-                <Card href={item.href} variant="compact" image={item.image} title={item.title} />
+                <Card
+                  href={item.href}
+                  variant="compact"
+                  image={item.image}
+                  title={item.title}
+                  trackCategory="main_story"
+                  trackAction="card_click"
+                  trackLabel={item.title}
+                />
               </div>
             ))}
           </div>

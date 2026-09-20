@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { Picture } from "@/components/common/Picture";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import styles from "./Card.module.css";
 import type { ImageAsset } from "@/content/types";
 
@@ -12,6 +12,10 @@ interface CardProps {
   title: string;
   description?: string;
   className?: string;
+  /** PROJECT_SPEC §12 분석 표 — 예: main_campaign/card_click, main_story/card_click */
+  trackCategory?: string;
+  trackAction?: string;
+  trackLabel?: string;
 }
 
 // edm-design-system.md §8-10 Card. "카드 전체가 링크" 요구를 지키기 위해 <a> 하나가
@@ -25,10 +29,20 @@ export function Card({
   title,
   description,
   className,
+  trackCategory = "",
+  trackAction = "",
+  trackLabel,
 }: CardProps) {
   return (
     <article className={[styles.card, className ?? ""].filter(Boolean).join(" ")}>
-      <Link href={href} className={styles.link} data-variant={variant}>
+      <TrackedLink
+        href={href}
+        className={styles.link}
+        data-variant={variant}
+        trackCategory={trackCategory}
+        trackAction={trackAction}
+        trackLabel={trackLabel}
+      >
         <div className={styles.imageWrap} data-variant={variant}>
           <Picture image={image} className={styles.image} />
         </div>
@@ -43,7 +57,7 @@ export function Card({
             </p>
           )}
         </div>
-      </Link>
+      </TrackedLink>
     </article>
   );
 }
@@ -53,15 +67,33 @@ interface BannerProps {
   image: ImageAsset;
   overlayText?: ReactNode;
   className?: string;
+  /** PROJECT_SPEC §12 분석 표 — main_banner: banner_click */
+  trackCategory?: string;
+  trackAction?: string;
+  trackLabel?: string;
 }
 
 // edm-design-system.md §6 Shadow 표 기준 Banner (radius 12, shadow-blue-02).
 // PROJECT_SPEC §7 S4 — 배너 이미지 안에 글자를 굽지 않고 HTML 텍스트 오버레이를 쓴다.
-export function Banner({ href, image, overlayText, className }: BannerProps) {
+export function Banner({
+  href,
+  image,
+  overlayText,
+  className,
+  trackCategory = "",
+  trackAction = "",
+  trackLabel,
+}: BannerProps) {
   return (
-    <Link href={href} className={[styles.banner, className ?? ""].filter(Boolean).join(" ")}>
+    <TrackedLink
+      href={href}
+      className={[styles.banner, className ?? ""].filter(Boolean).join(" ")}
+      trackCategory={trackCategory}
+      trackAction={trackAction}
+      trackLabel={trackLabel}
+    >
       <Picture image={image} className={styles.bannerImage} />
       {overlayText && <div className={styles.bannerOverlay}>{overlayText}</div>}
-    </Link>
+    </TrackedLink>
   );
 }

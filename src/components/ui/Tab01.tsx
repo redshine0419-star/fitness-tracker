@@ -14,11 +14,13 @@ interface Tab01Props {
   onChange: (id: string) => void;
   "aria-label": string;
   className?: string;
+  /** PROJECT_SPEC §12 분석 표 — main_story: tab_{id} */
+  trackCategory?: string;
 }
 
 // edm-design-system.md §8-5 Tab01 (Pill). PC/Mobile 크기는 typography.css와
 // 같은 방식으로 min-width:768px 미디어쿼리에서 자동 전환된다 (별도 size prop 없음).
-export function Tab01({ items, activeId, onChange, className, ...rest }: Tab01Props) {
+export function Tab01({ items, activeId, onChange, className, trackCategory, ...rest }: Tab01Props) {
   const listRef = useRef<HTMLDivElement>(null);
 
   function handleKeyDown(event: React.KeyboardEvent) {
@@ -62,6 +64,9 @@ export function Tab01({ items, activeId, onChange, className, ...rest }: Tab01Pr
             className={styles.tab}
             data-active={isActive || undefined}
             onClick={() => onChange(item.id)}
+            data-track-cat={trackCategory}
+            data-track-action={`tab_${item.id}`}
+            data-track-label={item.label}
           >
             {item.label}
           </button>

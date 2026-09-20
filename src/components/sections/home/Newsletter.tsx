@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Table } from "@/components/ui/Table";
+import { track } from "@/lib/analytics";
 import styles from "./Newsletter.module.css";
 
 const INTERESTS = ["국내 소식", "해외 소식", "후원자 이야기"] as const;
@@ -69,6 +70,8 @@ export function Newsletter() {
     setErrors(fieldErrors);
     if (Object.keys(fieldErrors).length > 0) {
       focusFirstError(fieldErrors);
+      // PROJECT_SPEC §12 — label은 오류 필드명만(값 금지).
+      track({ category: "main_newsletter", action: "submit_error", label: Object.keys(fieldErrors)[0] });
       return;
     }
 
@@ -86,9 +89,11 @@ export function Newsletter() {
         setInterests([]);
         setConsent(false);
         setErrors({});
+        track({ category: "main_newsletter", action: "submit_success" });
       } else {
         const data = (await res.json()) as { error?: string; field?: keyof FieldErrors };
         if (data.field) setErrors({ [data.field]: data.error });
+        track({ category: "main_newsletter", action: "submit_error", label: data.field });
       }
     } finally {
       setSubmitting(false);

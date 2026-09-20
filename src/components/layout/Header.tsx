@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import { SearchIcon } from "@/components/icons/ds/SearchIcon";
 import { siteConfig } from "@/content/site.config";
 import { navItems } from "@/content/nav";
@@ -68,15 +69,18 @@ export function Header() {
                     if (!event.currentTarget.contains(event.relatedTarget as Node)) closeMenu();
                   }}
                 >
-                  <Link
+                  <TrackedLink
                     href={item.href}
                     className={styles.navLink}
                     data-label={item.label}
                     aria-expanded={openId === item.label}
                     aria-controls={`megamenu-${item.label}`}
+                    trackCategory="header"
+                    trackAction="gnb_click"
+                    trackLabel={item.label}
                   >
                     {item.label}
-                  </Link>
+                  </TrackedLink>
                   {openId === item.label && <MegaMenu item={item} id={`megamenu-${item.label}`} />}
                 </li>
               ))}
@@ -85,13 +89,34 @@ export function Header() {
         </div>
 
         <div className={styles.utility}>
-          <Link href="/coming-soon/search" className={styles.iconTrigger} aria-label="검색">
+          <Link
+            href="/coming-soon/search"
+            className={styles.iconTrigger}
+            aria-label="검색"
+            data-track-cat="header"
+            data-track-action="search_click"
+            data-track-label="검색"
+          >
             <SearchIcon />
           </Link>
-          <Link href="/coming-soon/login" className={styles.loginLink}>
+          <Link
+            href="/coming-soon/login"
+            className={styles.loginLink}
+            data-track-cat="header"
+            data-track-action="login_click"
+            data-track-label="로그인"
+          >
             로그인
           </Link>
-          <Button href="/coming-soon/donate" size="sm" className={styles.desktopOnly}>
+          <Button
+            href="/coming-soon/donate"
+            size="sm"
+            className={styles.desktopOnly}
+            data-track-cat="header"
+            data-track-action="donate_click"
+            data-track-label="후원하기"
+            data-track-extra='{"cta_type":"donate"}'
+          >
             후원하기
           </Button>
           <button

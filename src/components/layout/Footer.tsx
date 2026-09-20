@@ -1,8 +1,8 @@
 "use client";
 
 import { PenLine } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import { PhotoPlatformIcon } from "@/components/icons/PhotoPlatformIcon";
 import { VideoPlatformIcon } from "@/components/icons/VideoPlatformIcon";
 import { Dropdown } from "@/components/ui/Dropdown";
@@ -21,22 +21,49 @@ export function Footer() {
           <ul className={styles.linkList}>
             {footerLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className={link.accent ? styles.accentLink : styles.link}>
+                <TrackedLink
+                  href={link.href}
+                  className={link.accent ? styles.accentLink : styles.link}
+                  trackCategory="footer"
+                  trackAction="link_click"
+                  trackLabel={link.label}
+                >
                   {link.label}
-                </Link>
+                </TrackedLink>
               </li>
             ))}
           </ul>
 
           <div className={styles.snsRow}>
             <div className={styles.snsIcons}>
-              <a href={siteConfig.sns.youtube} className={styles.snsButton} aria-label="유튜브">
+              <a
+                href={siteConfig.sns.youtube}
+                className={styles.snsButton}
+                aria-label="유튜브"
+                data-track-cat="footer"
+                data-track-action="sns_click"
+                data-track-label="유튜브"
+              >
                 <VideoPlatformIcon />
               </a>
-              <a href={siteConfig.sns.blog} className={styles.snsButton} aria-label="블로그">
+              <a
+                href={siteConfig.sns.blog}
+                className={styles.snsButton}
+                aria-label="블로그"
+                data-track-cat="footer"
+                data-track-action="sns_click"
+                data-track-label="블로그"
+              >
                 <PenLine width={20} height={20} aria-hidden="true" />
               </a>
-              <a href={siteConfig.sns.instagram} className={styles.snsButton} aria-label="인스타그램">
+              <a
+                href={siteConfig.sns.instagram}
+                className={styles.snsButton}
+                aria-label="인스타그램"
+                data-track-cat="footer"
+                data-track-action="sns_click"
+                data-track-label="인스타그램"
+              >
                 <PhotoPlatformIcon />
               </a>
             </div>

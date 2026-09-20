@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Picture } from "@/components/common/Picture";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { TrackedLink } from "@/components/common/TrackedLink";
 import { Badge01 } from "@/components/ui/Badge01";
 import type { NewsItem } from "@/content/types";
 import styles from "./NewsBoard.module.css";
@@ -23,11 +23,20 @@ export function NewsBoard({ news }: NewsBoardProps) {
         description="다양한 소식을 전합니다."
         moreHref="/coming-soon/story/news"
         moreLabel="소식 더보기"
+        moreTrackCategory="main_news"
+        moreTrackAction="more_click"
       />
 
       <div className={`grid ${styles.layout}`}>
         {cards.map((item) => (
-          <Link key={item.href + item.title} href={item.href} className={styles.imageCard}>
+          <TrackedLink
+            key={item.href + item.title}
+            href={item.href}
+            className={styles.imageCard}
+            trackCategory="main_news"
+            trackAction="card_click"
+            trackLabel={item.title}
+          >
             <div className={styles.imageWrap}>
               {item.image && <Picture image={item.image} className={styles.image} />}
             </div>
@@ -35,19 +44,25 @@ export function NewsBoard({ news }: NewsBoardProps) {
               <Badge01 variant="filled-gray">{item.category}</Badge01>
               <h3 className={styles.imageCardTitle}>{item.title}</h3>
             </div>
-          </Link>
+          </TrackedLink>
         ))}
 
         <ul className={styles.list}>
           {list.map((item) => (
             <li key={item.href + item.title} className={styles.listItem}>
-              <Link href={item.href} className={styles.listLink}>
+              <TrackedLink
+                href={item.href}
+                className={styles.listLink}
+                trackCategory="main_news"
+                trackAction="list_click"
+                trackLabel={item.title}
+              >
                 <Badge01 variant="filled-gray">{item.category}</Badge01>
                 <h3 className={`t-body1-bold ${styles.listTitle}`}>{item.title}</h3>
                 <time className={`t-detail ${styles.listDate}`} dateTime={item.date}>
                   {item.date}
                 </time>
-              </Link>
+              </TrackedLink>
             </li>
           ))}
         </ul>

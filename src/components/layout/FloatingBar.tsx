@@ -29,10 +29,21 @@ export function FloatingBar() {
           shape="square"
           fullWidth
           href="/coming-soon/donate/one-time"
+          data-track-cat="floating"
+          data-track-action="mobile_bar_once"
+          data-track-extra='{"cta_type":"donate"}'
         >
           일시후원
         </Button>
-        <Button color="primary" shape="square" fullWidth href="/coming-soon/donate/regular-club">
+        <Button
+          color="primary"
+          shape="square"
+          fullWidth
+          href="/coming-soon/donate/regular-club"
+          data-track-cat="floating"
+          data-track-action="mobile_bar_regular"
+          data-track-extra='{"cta_type":"donate"}'
+        >
           정기후원
         </Button>
       </div>
@@ -43,6 +54,8 @@ export function FloatingBar() {
             icon={<ArrowUp width={20} height={20} aria-hidden="true" />}
             aria-label="맨 위로"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            data-track-cat="floating"
+            data-track-action="top_click"
           />
         </div>
       )}

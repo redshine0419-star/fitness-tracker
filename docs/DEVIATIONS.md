@@ -67,6 +67,12 @@
 - **왜**: `.grid`(`display: grid`)처럼 저작자(author) 스타일이 있는 요소에 네이티브 `hidden` 속성을 함께 쓰면, 브라우저 기본(User-Agent) 스타일 `[hidden] { display: none }`이 저작자 스타일에 밀려 무시됩니다(출처 우선순위상 UA < 저작자). PROJECT_SPEC §7 S3은 "비활성 패널은 hidden 속성만" 적용하라고 명시하므로, 이 표준 동작을 복원하는 규칙을 추가하는 것이 스펙의 의도를 살리는 가장 직접적인 수정이라고 판단했습니다. 회귀 테스트(`tests/e2e/home-sections.spec.ts`)도 추가했습니다.
 - **대안**: 탭 패널마다 `hidden` 대신 조건부 렌더링(`{active && <Panel/>}`)으로 바꾸는 방법도 있었으나, 그러면 "모든 탭 패널을 서버 렌더링해 크롤러가 전체를 읽게 한다"는 §7 S3 요구를 못 지키게 되어 채택하지 않았습니다.
 
+### 11. WebPage JSON-LD의 `name`에 전체 `<title>` 대신 `siteConfig.tagline`만 사용 (Step 6)
+
+- **무엇을**: `<title>`은 `{siteConfig.name} | {siteConfig.tagline}` 형식(§11)을 그대로 쓰지만, `lib/jsonld.ts`의 `webPageJsonLd()`에 넘기는 `title`(→ JSON-LD `name` 필드)은 `siteConfig.tagline` 하나만 사용하고 단체명(`siteConfig.name`)을 붙이지 않았다.
+- **왜**: `siteConfig.name`이 아직 `'{{TODO}}'`라서, 전체 `<title>` 문자열을 그대로 JSON-LD `name`에 넣으면 `"{{TODO}} | 아동과 지역사회를..."`처럼 `{{TODO}}`가 **부분 문자열로 포함된 채** 구조화 데이터에 노출된다. `lib/jsonld.ts`의 `omitTodo()`는 필드 값이 정확히 `'{{TODO}}'`와 같을 때만 제외하도록 구현했는데(§11의 "값이 `'{{TODO}}'`인 필드는 출력에서 제외한다"는 문구를 그대로 따른 것), 이 필드처럼 TODO 문자열이 다른 텍스트와 합쳐진 값은 그 규칙으로 걸러지지 않는다. 실제로 프로덕션 빌드 HTML을 검사해 이 leak을 발견했다. `<title>`(화면에 보이는 텍스트)에 TODO가 보이는 것은 기존 결정(DEVIATIONS #2)대로 의도된 것이지만, 검색엔진·생성형 검색이 그대로 읽어가는 구조화 데이터에 플레이스홀더가 섞여 들어가는 것은 §11의 취지(플레이스홀더를 구조화 데이터로 내보내지 않는다)에 어긋난다고 보아, WebPage의 `name`은 이미 완성된 문구인 `tagline`만 쓰도록 좁혔다.
+- **대안**: `omitTodo()`를 "정확히 일치" 대신 "부분 문자열 포함" 검사로 바꾸는 방법도 있었지만, 그러면 필드 전체가 사라져(예: 제목이 통째로 빠짐) 오히려 검색엔진에 더 빈약한 정보를 주게 된다. 단체명이 필요 없는 필드(WebPage 이름)는 TODO를 포함하지 않는 문구로 좁히고, 단체명 자체가 의미 있는 필드(Organization의 `name`)는 기존처럼 정확히 일치할 때만 제외하는 쪽이 더 보수적이라고 판단했다.
+
 ### 3. Next.js 16.3.5 — 학습 데이터와의 버전 차이 대응 방식 (Step 0)
 
 - **무엇을**: `next dev` 최초 실행 시 자동 생성된 `AGENTS.md`/`CLAUDE.md`가 "이 버전은 학습 데이터와 다를 수 있으니 `node_modules/next/dist/docs/`를 먼저 읽으라"고 안내함. 매 Step마다 전체 문서를 정독하는 대신, 그 Step에서 실제로 사용하는 API(예: `next/font/local`, `generateMetadata`, `sitemap.ts`/`robots.ts` 파일 컨벤션)에 해당하는 문서만 그때그때 확인하는 방식으로 진행하기로 함.
