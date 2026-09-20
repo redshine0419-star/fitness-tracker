@@ -184,3 +184,31 @@ $ npm run verify
 **질문**: 없음
 
 ---
+
+## Step 4 — S5~S7 (소개 / 신뢰지표 / 캠페인 캐러셀 / 소식) (완료)
+
+**변경한 파일**
+- `src/content/home.ts` — introSection, trustSection(`enabled: false`), campaigns(6), newsItems(5, 이미지 2+텍스트 3)
+- `src/components/common/SectionHeader.tsx` — `actionSlot` prop 추가(Plus 버튼 대신 인디케이터 pill 등 커스텀 요소를 우측에 배치할 수 있도록 일반화)
+- `src/components/common/VisuallyHidden.tsx` — `id` 등 임의 속성을 전달할 수 있도록 `rest` prop 스프레드 추가
+- `src/components/sections/home/TrustSection.tsx` — S5-A(소개, 항상 노출) + S5-B(신뢰 지표 밴드, `trust.enabled=false`면 DOM에서 완전히 빠짐) 한 파일에서 처리 (§4 디렉터리 구조가 이 섹션을 컴포넌트 하나로만 명명)
+- `src/components/sections/home/CampaignCarousel.tsx` — `embla-carousel-react`(`slidesToScroll:'auto'`), PC 헤더 인디케이터 pill / Mobile 스와이프+하단 pill
+- `src/components/sections/home/NewsBoard.tsx` — 이미지 카드 2개(16:10) + 텍스트 목록 3개
+- `src/app/page.tsx`, `page.module.css` — 섹션 조립 + §7.0 padding 표 적용
+- `tests/e2e/campaign-news.spec.ts` — 신뢰 밴드 기본 숨김, 캐러셀 페이지 이동 검증
+
+**검증 결과**
+```
+$ npm run verify
+✔ lint / typecheck / check:tokens(31개 파일) / build 통과
+✔ test:e2e — 24 tests, 19 passed, 5 skipped(뷰포트 조건부) — 0 failed
+```
+
+**스크린샷**: `docs/screenshots/step-4/{1920,768,360}.png` — 신뢰 지표 밴드가 기본 설정대로 화면에 보이지 않는 것을 확인.
+
+**DS와 다르게 한 점**
+- 특별히 없음(§16 결정대로 신뢰 밴드 기본 숨김 적용). Card 재사용 시 eyebrow/뱃지 슬롯을 그대로 활용해 캠페인 카드를 만들었습니다.
+
+**질문**: 없음
+
+---

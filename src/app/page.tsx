@@ -1,10 +1,21 @@
+import { CampaignCarousel } from "@/components/sections/home/CampaignCarousel";
 import { HeroSlider } from "@/components/sections/home/HeroSlider";
+import { NewsBoard } from "@/components/sections/home/NewsBoard";
 import { PromoBanner } from "@/components/sections/home/PromoBanner";
 import { StoryBento } from "@/components/sections/home/StoryBento";
-import { heroSlides, promoBanner, storyTabs } from "@/content/home";
+import { TrustSection } from "@/components/sections/home/TrustSection";
+import {
+  campaigns,
+  heroSlides,
+  introSection,
+  newsItems,
+  promoBanner,
+  storyTabs,
+  trustSection,
+} from "@/content/home";
 import styles from "./page.module.css";
 
-// TODO(Step 4-5): S5~S10 섹션 추가.
+// TODO(Step 5): S8~S10 섹션 추가.
 export default function HomePage() {
   return (
     <>
@@ -19,6 +30,13 @@ export default function HomePage() {
           title={promoBanner.title}
           description={promoBanner.description}
         />
+      </div>
+      <TrustSection intro={introSection} trust={trustSection} />
+      <div className={styles.campaignSection}>
+        <CampaignCarousel campaigns={campaigns} />
+      </div>
+      <div className={styles.newsSection}>
+        <NewsBoard news={newsItems} />
       </div>
     </>
   );

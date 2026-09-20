@@ -1,0 +1,50 @@
+.desktopIndicator {
+  display: none;
+}
+
+.mobileIndicator {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.slide {
+  flex: 0 0 87%;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .desktopIndicator {
+    display: block;
+  }
+  .mobileIndicator {
+    display: none;
+  }
+  .container {
+    gap: var(--space-6);
+  }
+  .slide {
+    flex: 0 0 calc((100% - var(--space-6)) / 2);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .slide {
+    flex: 0 0 calc((100% - 2 * var(--space-6)) / 3);
+  }
+}
+
+@media (min-width: 1440px) {
+  .slide {
+    flex: 0 0 calc((100% - 3 * var(--space-6)) / 4);
+  }
+}

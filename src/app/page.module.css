@@ -11,3 +11,15 @@
   padding-bottom: 0;
   background: var(--white);
 }
+
+.campaignSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+  background: var(--white);
+}
+
+.newsSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+  background: var(--color-bg-default);
+}

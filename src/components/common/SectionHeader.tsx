@@ -9,6 +9,8 @@ interface SectionHeaderProps {
   description?: string;
   moreHref?: string;
   moreLabel?: string;
+  /** Plus 버튼 대신 우측 상단에 넣을 커스텀 요소 (예: S6 캠페인의 인디케이터 pill) */
+  actionSlot?: ReactNode;
   children?: ReactNode;
 }
 
@@ -20,6 +22,7 @@ export function SectionHeader({
   description,
   moreHref,
   moreLabel,
+  actionSlot,
   children,
 }: SectionHeaderProps) {
   return (
@@ -30,10 +33,14 @@ export function SectionHeader({
       </h2>
       {description && <p className={`t-body2-regular ${styles.description}`}>{description}</p>}
       {children}
-      {moreHref && (
-        <div className={styles.moreSlot}>
-          <PlusButton href={moreHref} aria-label={moreLabel ?? `${title} 더보기`} />
-        </div>
+      {actionSlot ? (
+        <div className={styles.moreSlot}>{actionSlot}</div>
+      ) : (
+        moreHref && (
+          <div className={styles.moreSlot}>
+            <PlusButton href={moreHref} aria-label={moreLabel ?? `${title} 더보기`} />
+          </div>
+        )
       )}
     </div>
   );
