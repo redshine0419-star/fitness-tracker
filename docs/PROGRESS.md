@@ -337,3 +337,36 @@ Lighthouse(모바일, 참고 목표 — npx lighthouse, 이 샌드박스에 프�
 **질문**: 없음
 
 ---
+
+## Step 8 — 문서화 (README.md) (완료)
+
+**변경한 파일**
+- `README.md` — 전면 재작성. 비개발자 기준으로: (1) 실행법(`npm install`/`dev`/`build`/`start`/검증
+  명령어), (2) `.env.local` 설정법(`NEXT_PUBLIC_SITE_URL`/`NEXT_PUBLIC_GTM_ID`), (3) 파일별
+  콘텐츠 교체 가이드(`site.config.ts`/`nav.ts`/`home.ts`/`footer.ts` 각 항목 표 + 이미지
+  교체 절차), (4) 지금 비어 있는 `{{TODO}}` 12곳을 파일·항목별로 표로 정리, (5) 알려진
+  이슈 5가지(§5.5 명도 대비, 뉴스레터 미저장, `/coming-soon` 스텁, 폰트 용량, Lighthouse
+  샌드박스 불안정), (6) Phase 2 후보, (7) 프로젝트 구조 참고
+
+**검증 결과**
+```
+$ npm run lint && npm run typecheck && npm run check:tokens && npm run build
+✔ 전부 통과 (README만 변경돼 코드에는 영향 없음, 회귀 확인용으로 재실행)
+
+$ PW_CHROMIUM_PATH=... npx playwright test
+✔ 57 tests, 51 passed, 6 skipped(뷰포트 조건부) — 0 failed
+```
+
+**스크린샷**: `docs/screenshots/step-8/{1920,768,360}.png` — Step 8은 문서화만 다뤄 화면은
+Step 7과 동일합니다(회귀 없음 확인용).
+
+**DS와 다르게 한 점**: 없음(문서 작업만 진행)
+
+**질문**: 없음
+
+---
+
+## 전체 완료 (Step 0–8)
+
+PROJECT_SPEC.md §15가 정의한 Step 0부터 Step 8까지 전부 완료했습니다. 최종 요약과 사용자가
+직접 확인해야 할 항목은 이 세션의 마지막 채팅 메시지(최종 보고)에 정리했습니다.
