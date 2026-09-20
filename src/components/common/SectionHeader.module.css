@@ -1,0 +1,30 @@
+.wrap {
+  position: relative;
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.eyebrow {
+  color: var(--text-accent);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-01);
+}
+
+.description {
+  margin-top: var(--space-3);
+  color: var(--text-03);
+}
+
+.moreSlot {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

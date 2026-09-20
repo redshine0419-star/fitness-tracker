@@ -129,6 +129,9 @@
   align-items: center;
   padding: var(--space-6);
   color: var(--white);
+  /* 플레이스홀더를 포함한 어떤 배경 이미지 위에서도 글자 대비를 확보하기 위한 스크림.
+     Hero와 동일한 토큰(--overlay-hero)을 재사용한다. */
+  background: var(--overlay-hero);
 }
 
 @media (min-width: 768px) {

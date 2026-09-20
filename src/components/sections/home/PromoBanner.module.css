@@ -1,0 +1,12 @@
+.overlayText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--white);
+  max-width: 480px;
+}
+
+.overlayText p {
+  margin: 0;
+  color: var(--white);
+}

@@ -43,6 +43,14 @@ img {
   max-width: 100%;
 }
 
+/* An element's own `display: grid/flex` (author style) otherwise wins over the
+   browser's default `[hidden] { display: none }` (UA style) at equal specificity
+   by origin order — this restores hiding for elements like tab panels that carry
+   both the `hidden` attribute and a `.grid`/`.container` layout class. */
+[hidden] {
+  display: none;
+}
+
 /* DS §7 SVG 공통 규칙 */
 svg {
   display: block;

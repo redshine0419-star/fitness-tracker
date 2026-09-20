@@ -153,3 +153,34 @@ $ npm run verify
 **질문**: 없음
 
 ---
+
+## Step 3 — S2~S4 (Hero / 스토리 / 프로모션 배너) (완료)
+
+**변경한 파일**
+- `src/content/home.ts` — heroSlides(3), storyTabs(3×5), promoBanner 샘플 콘텐츠
+- `src/components/common/SectionHeader.tsx` — 공통 섹션 헤더(중앙 정렬 + Plus 더보기)
+- `src/components/sections/home/HeroSlider.tsx` — embla 없이 opacity 크로스페이드로 직접 구현 (DEVIATIONS #8), 자동재생 5초/600ms 전환, hover·focus·Esc 없이도 pause 버튼으로 정지, `prefers-reduced-motion`은 `useSyncExternalStore`로 반응형 감지, 첫 슬라이드만 priority
+- `src/components/sections/home/StoryBento.tsx` — 탭 3개(전부 서버 렌더링) + 벤토 그리드(큰 카드 span6/row2 + 작은 카드 2×2, 브레이크포인트별 컬럼 스팬)
+- `src/components/sections/home/PromoBanner.tsx` — Banner + HTML 텍스트 오버레이
+- `src/app/page.tsx`, `page.module.css` — 섹션 조립 + §7.0 padding 표 적용
+- `src/styles/globals.css` — **버그 수정**: `[hidden]`이 `.grid`의 `display:grid`에 밀리던 문제 (DEVIATIONS #9)
+- `src/components/ui/Card.module.css` — Banner 오버레이에 `--overlay-hero` 스크림 추가(플레이스홀더 이미지 위 흰 글자 대비 확보)
+- `tests/e2e/home-sections.spec.ts` — 탭 전환/키보드, Hero 컨트롤 회귀 테스트
+
+**검증 결과**
+```
+$ npm run verify
+✔ lint / typecheck / check:tokens(28개 파일) / build 통과
+✔ test:e2e — 18 tests, 14 passed, 4 skipped(뷰포트 조건부) — 0 failed
+```
+
+**스크린샷**: `docs/screenshots/step-3/{1920,768,360}.png`
+- 참고: 360.png(전체 페이지 캡처)에서 하단 고정 CTA 바가 스토리 섹션 중간에 겹쳐 보이는 것은 Playwright의 `fullPage` 스크린샷이 `position:fixed` 요소를 이어붙이는 과정에서 생기는 촬영 도구의 알려진 한계이며, 실제 브라우저 스크롤에서는 정상적으로 화면 하단에 고정됩니다(별도로 뷰포트 단위 스크린샷으로 확인함).
+
+**DS와 다르게 한 점**
+- DEVIATIONS.md #8(embla 미사용), #9(`[hidden]` 버그 수정) 참고.
+- Card의 Banner 오버레이에 DS/스펙이 명시하지 않은 스크림(`--overlay-hero`)을 추가했습니다 — 실제 사진이 아닌 회색 placeholder 위에서도 흰 텍스트 대비를 보장하기 위함이며, 기존 확장 토큰을 재사용해 새 토큰을 만들지는 않았습니다.
+
+**질문**: 없음
+
+---

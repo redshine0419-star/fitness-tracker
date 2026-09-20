@@ -1,0 +1,13 @@
+/* PROJECT_SPEC §7.0 섹션별 padding 표 */
+
+.storySection {
+  padding-top: var(--section-gap-lg);
+  padding-bottom: 0;
+  background: var(--white);
+}
+
+.bannerSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: 0;
+  background: var(--white);
+}
