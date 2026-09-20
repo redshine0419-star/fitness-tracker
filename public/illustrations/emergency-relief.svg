@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- sheltering hands (arc) -->
+  <path d="M90 150a110 110 0 0 1 220 0" fill="none" stroke="#127937" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="90" cy="150" r="12" fill="#127937"/>
+  <circle cx="310" cy="150" r="12" fill="#127937"/>
+  <!-- house -->
+  <g>
+    <rect x="160" y="176" width="80" height="60" fill="#ffffff"/>
+    <path d="M150 180l50-38 50 38z" fill="#18a149"/>
+    <rect x="192" y="200" width="16" height="36" fill="#a5e9bd"/>
+  </g>
+  <!-- heart above roof -->
+  <path d="M212 128c-4-9-18-9-21 0-3 7 3 15 21 25 18-10 24-18 21-25-3-9-17-9-21 0z" fill="#ffffff"/>
+</svg>

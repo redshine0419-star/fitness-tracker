@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- globe -->
+  <circle cx="200" cy="150" r="66" fill="#1ec95b"/>
+  <ellipse cx="200" cy="150" rx="66" ry="26" fill="none" stroke="#ecfbf2" stroke-width="4"/>
+  <ellipse cx="200" cy="150" rx="26" ry="66" fill="none" stroke="#ecfbf2" stroke-width="4"/>
+  <path d="M134 150h132" stroke="#ecfbf2" stroke-width="4"/>
+  <!-- two hands meeting below -->
+  <path d="M120 226c10-14 24-20 40-20h80c16 0 30 6 40 20" fill="none" stroke="#127937" stroke-width="14" stroke-linecap="round"/>
+</svg>

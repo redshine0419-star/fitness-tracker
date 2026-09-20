@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- gift box -->
+  <g>
+    <rect x="140" y="150" width="120" height="90" rx="6" fill="#ffffff"/>
+    <rect x="140" y="150" width="120" height="24" fill="#18a149"/>
+    <rect x="188" y="150" width="24" height="90" fill="#1ec95b"/>
+    <path d="M200 150c-30-30-60-10-40 10 12 12 40 0 40-10z" fill="#127937"/>
+    <path d="M200 150c30-30 60-10 40 10-12 12-40 0-40-10z" fill="#127937"/>
+  </g>
+  <!-- sparkles -->
+  <g fill="#ffffff">
+    <path d="M104 116l6 14 14 6-14 6-6 14-6-14-14-6 14-6z"/>
+    <path d="M300 190l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+    <path d="M280 108l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+  </g>
+</svg>

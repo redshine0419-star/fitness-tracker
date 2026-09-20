@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- building -->
+  <g>
+    <rect x="130" y="120" width="140" height="100" fill="#ffffff"/>
+    <rect x="130" y="120" width="140" height="14" fill="#127937"/>
+    <rect x="150" y="146" width="24" height="24" fill="#a5e9bd"/>
+    <rect x="188" y="146" width="24" height="24" fill="#a5e9bd"/>
+    <rect x="226" y="146" width="24" height="24" fill="#a5e9bd"/>
+    <rect x="186" y="184" width="28" height="36" fill="#18a149"/>
+  </g>
+  <!-- two children figures -->
+  <g>
+    <circle cx="108" cy="196" r="14" fill="#127937"/>
+    <path d="M88 236c0-20 9-34 20-34s20 14 20 34" fill="#18a149"/>
+  </g>
+  <g>
+    <circle cx="292" cy="200" r="12" fill="#18a149"/>
+    <path d="M275 236c0-17 8-30 17-30s17 13 17 30" fill="#1ec95b"/>
+  </g>
+</svg>

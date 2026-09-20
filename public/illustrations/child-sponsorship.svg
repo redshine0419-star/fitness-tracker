@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <circle cx="200" cy="150" r="82" fill="#a5e9bd"/>
+  <!-- child figure -->
+  <g>
+    <circle cx="178" cy="120" r="26" fill="#127937"/>
+    <path d="M138 220c0-38 18-64 40-64s40 26 40 64" fill="#18a149"/>
+    <rect x="128" y="212" width="100" height="14" rx="7" fill="#ecfbf2"/>
+  </g>
+  <!-- open book -->
+  <g>
+    <path d="M226 176l38-10v58l-38 10z" fill="#ffffff"/>
+    <path d="M300 176l-38-10v58l38 10z" fill="#f5f5f7"/>
+    <path d="M263 168v58" stroke="#1ec95b" stroke-width="4"/>
+    <path d="M234 182l24-6M234 194l24-6M234 206l24-6" stroke="#78df9d" stroke-width="3" stroke-linecap="round"/>
+    <path d="M268 176l24 6M268 188l24 6M268 200l24 6" stroke="#78df9d" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- heart -->
+  <path d="M198 92c-6-12-24-12-28 0-4 10 4 20 28 34 24-14 32-24 28-34-4-12-22-12-28 0z" fill="#ffffff"/>
+</svg>

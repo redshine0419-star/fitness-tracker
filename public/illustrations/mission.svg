@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- flag on pole -->
+  <g>
+    <rect x="196" y="90" width="8" height="140" rx="4" fill="#127937"/>
+    <path d="M204 96h64l-16 20 16 20h-64z" fill="#1ec95b"/>
+  </g>
+  <!-- compass circle -->
+  <circle cx="150" cy="200" r="30" fill="#ffffff"/>
+  <circle cx="150" cy="200" r="22" fill="none" stroke="#78df9d" stroke-width="4"/>
+  <path d="M150 186l8 20-8 8-8-8z" fill="#18a149"/>
+</svg>

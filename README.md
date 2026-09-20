@@ -123,11 +123,12 @@ cp .env.example .env.local
 
 ### 3.5 이미지 교체하기
 
-지금은 모든 이미지가 `public/placeholder/gray.svg`(균일한 회색 사각형) 하나를 재사용하고
-있습니다. 실제 이미지로 바꾸려면:
+지금은 사진 대신 `public/illustrations/` 폴더의 자체 제작 일러스트(SVG, 아동결연·긴급구호·
+캠페인 등 주제별 12종)를 쓰고 있습니다. 실제 사진 저작권·초상권 문제를 피하기 위한 임시
+자리표시자입니다. 실제 사진으로 바꾸려면:
 
 1. 이미지 파일(jpg/png/webp)을 `public/images/` 같은 폴더를 새로 만들어 넣습니다.
-2. `home.ts` 등에서 `image: { pc: "/placeholder/gray.svg", ... }`로 된 부분을
+2. `home.ts`/`nav.ts`에서 `image: { pc: "/illustrations/xxx.svg", ... }`로 된 부분을
    `pc: "/images/파일이름.jpg"`로 바꿉니다.
 3. `width`/`height`는 **실제 이미지의 가로/세로 픽셀 크기**로 반드시 같이 바꿔주세요
    (화면이 갑자기 밀리는 현상을 막기 위한 값입니다).

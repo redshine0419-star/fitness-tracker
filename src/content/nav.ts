@@ -3,7 +3,9 @@
 // 실제 서비스 시작 전에 단체 성격에 맞게 이 파일만 수정하면 된다.
 import type { NavItem } from "./types";
 
-const promoImage = { pc: "/placeholder/gray.svg", alt: "", width: 400, height: 250 };
+function promoImage(illustration: string) {
+  return { pc: `/illustrations/${illustration}.svg`, alt: "", width: 400, height: 250 };
+}
 
 export const navItems: NavItem[] = [
   {
@@ -36,8 +38,8 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage, title: "정기후원 안내 살펴보기", href: "/coming-soon/donate/regular-club" },
-      { image: promoImage, title: "아동결연 후원 소개", href: "/coming-soon/donate/sponsorship" },
+      { image: promoImage("monthly-giving"), title: "정기후원 안내 살펴보기", href: "/coming-soon/donate/regular-club" },
+      { image: promoImage("child-sponsorship"), title: "아동결연 후원 소개", href: "/coming-soon/donate/sponsorship" },
     ],
   },
   {
@@ -67,8 +69,8 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage, title: "최근 활동 이야기 보기", href: "/coming-soon/story/stories" },
-      { image: promoImage, title: "참여 프로그램 살펴보기", href: "/coming-soon/story/programs" },
+      { image: promoImage("story-people"), title: "최근 활동 이야기 보기", href: "/coming-soon/story/stories" },
+      { image: promoImage("celebration"), title: "참여 프로그램 살펴보기", href: "/coming-soon/story/programs" },
     ],
   },
   {
@@ -101,8 +103,8 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage, title: "설립 정신 알아보기", href: "/coming-soon/about/mission" },
-      { image: promoImage, title: "투명경영 보고서 보기", href: "/coming-soon/about/finance" },
+      { image: promoImage("mission"), title: "설립 정신 알아보기", href: "/coming-soon/about/mission" },
+      { image: promoImage("transparency-report"), title: "투명경영 보고서 보기", href: "/coming-soon/about/finance" },
     ],
   },
   {
@@ -126,8 +128,8 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage, title: "국제협력사업 살펴보기", href: "/coming-soon/programs/international" },
-      { image: promoImage, title: "국내복지사업 살펴보기", href: "/coming-soon/programs/domestic" },
+      { image: promoImage("global-cooperation"), title: "국제협력사업 살펴보기", href: "/coming-soon/programs/international" },
+      { image: promoImage("community-center"), title: "국내복지사업 살펴보기", href: "/coming-soon/programs/domestic" },
     ],
   },
   {

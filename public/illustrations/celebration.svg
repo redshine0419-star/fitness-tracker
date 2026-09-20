@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- three people, arms raised -->
+  <g>
+    <circle cx="150" cy="146" r="20" fill="#78df9d"/>
+    <path d="M120 224c0-30 4-50 30-50s30 20 30 50" fill="#1ec95b"/>
+    <path d="M124 190l-18-30M176 190l18-30" stroke="#1ec95b" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <g>
+    <circle cx="200" cy="126" r="24" fill="#127937"/>
+    <path d="M164 224c0-34 8-58 36-58s36 24 36 58" fill="#18a149"/>
+    <path d="M168 182l-20-34M232 182l20-34" stroke="#18a149" stroke-width="11" stroke-linecap="round"/>
+  </g>
+  <g>
+    <circle cx="250" cy="146" r="20" fill="#78df9d"/>
+    <path d="M220 224c0-30 4-50 30-50s30 20 30 50" fill="#1ec95b"/>
+    <path d="M224 190l-18-30M276 190l18-30" stroke="#1ec95b" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <!-- confetti -->
+  <g fill="#ffffff">
+    <circle cx="96" cy="90" r="6"/>
+    <circle cx="308" cy="86" r="5"/>
+    <circle cx="330" cy="130" r="6"/>
+    <rect x="80" y="130" width="10" height="10" transform="rotate(20 85 135)"/>
+    <rect x="300" y="150" width="9" height="9" transform="rotate(-15 305 155)"/>
+  </g>
+</svg>

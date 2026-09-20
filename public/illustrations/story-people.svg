@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- three people -->
+  <g>
+    <circle cx="150" cy="150" r="20" fill="#78df9d"/>
+    <path d="M120 220c0-28 13-48 30-48s30 20 30 48" fill="#1ec95b"/>
+  </g>
+  <g>
+    <circle cx="200" cy="132" r="24" fill="#127937"/>
+    <path d="M164 224c0-32 16-56 36-56s36 24 36 56" fill="#18a149"/>
+  </g>
+  <g>
+    <circle cx="252" cy="150" r="20" fill="#78df9d"/>
+    <path d="M222 220c0-28 13-48 30-48s30 20 30 48" fill="#1ec95b"/>
+  </g>
+  <!-- speech bubble -->
+  <path d="M240 90h60a12 12 0 0 1 12 12v20a12 12 0 0 1-12 12h-34l-14 14v-14h-12a12 12 0 0 1-12-12v-20a12 12 0 0 1 12-12z" fill="#ffffff"/>
+  <path d="M256 106h30M256 116h20" stroke="#78df9d" stroke-width="4" stroke-linecap="round"/>
+</svg>

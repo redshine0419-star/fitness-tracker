@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- open book -->
+  <g>
+    <path d="M200 150l-70 20v50l70-16z" fill="#ffffff"/>
+    <path d="M200 150l70 20v50l-70-16z" fill="#f5f5f7"/>
+    <path d="M148 176l38-10M148 190l38-10M148 204l38-10" stroke="#78df9d" stroke-width="3" stroke-linecap="round"/>
+    <path d="M214 166l38 10M214 180l38 10M214 194l38 10" stroke="#78df9d" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- graduation cap -->
+  <g>
+    <path d="M200 92l70 26-70 26-70-26z" fill="#127937"/>
+    <rect x="196" y="118" width="8" height="30" fill="#18a149"/>
+    <circle cx="200" cy="150" r="6" fill="#18a149"/>
+  </g>
+</svg>

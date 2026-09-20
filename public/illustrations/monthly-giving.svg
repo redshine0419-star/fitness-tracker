@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- open hands -->
+  <path d="M110 190c0-20 16-30 30-30h120c14 0 30 10 30 30" fill="none" stroke="#127937" stroke-width="14" stroke-linecap="round"/>
+  <!-- heart resting in hands -->
+  <path d="M200 110c-10-18-38-18-44 2-6 18 8 32 44 56 36-24 50-38 44-56-6-20-34-20-44-2z" fill="#1ec95b"/>
+  <!-- small calendar/coin accents -->
+  <g>
+    <rect x="120" y="120" width="34" height="30" rx="4" fill="#ffffff"/>
+    <rect x="120" y="120" width="34" height="9" rx="4" fill="#18a149"/>
+    <circle cx="280" cy="132" r="18" fill="#ffffff"/>
+    <text x="280" y="138" font-size="16" font-weight="700" fill="#18a149" text-anchor="middle" font-family="sans-serif">₩</text>
+  </g>
+</svg>

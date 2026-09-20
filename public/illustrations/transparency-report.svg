@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#ecfbf2"/>
+  <circle cx="200" cy="150" r="120" fill="#d2f4de"/>
+  <!-- clipboard -->
+  <g>
+    <rect x="140" y="96" width="120" height="150" rx="10" fill="#ffffff"/>
+    <rect x="172" y="86" width="56" height="20" rx="6" fill="#127937"/>
+    <rect x="158" y="130" width="84" height="8" rx="4" fill="#a5e9bd"/>
+    <rect x="158" y="150" width="60" height="8" rx="4" fill="#a5e9bd"/>
+  </g>
+  <!-- bar chart -->
+  <g>
+    <rect x="160" y="196" width="16" height="30" fill="#78df9d"/>
+    <rect x="184" y="182" width="16" height="44" fill="#1ec95b"/>
+    <rect x="208" y="204" width="16" height="22" fill="#78df9d"/>
+    <rect x="232" y="172" width="16" height="54" fill="#18a149"/>
+  </g>
+  <!-- check circle -->
+  <circle cx="250" cy="100" r="22" fill="#1ec95b"/>
+  <path d="M240 100l7 7 13-14" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
