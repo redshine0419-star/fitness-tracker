@@ -64,6 +64,8 @@ export function FeaturedVideo({ videoId, thumbnail, category, title, description
             styleVariant="border"
             color="secondary"
             shape="square"
+            // §9 — 반복되는 "자세히 보기" 문구는 대상이 드러나는 aria-label을 붙인다.
+            aria-label={`${title} 자세히 보기`}
             data-track-cat="main_featured"
             data-track-action="cta_more"
             data-track-label={title}

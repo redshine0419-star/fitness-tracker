@@ -26,7 +26,9 @@
   align-items: center;
   justify-content: space-between;
   font-size: 16px;
-  color: var(--text-04);
+  /* DS는 #999(--text-04)를 쓰지만 흰 배경 대비 약 2.8:1로 4.5:1 미달이라 --text-03으로
+     올렸다 (axe color-contrast, Step 7 QA에서 발견 — Footer.tsx의 동일 사례와 같은 조치). */
+  color: var(--text-03);
 }
 
 .trigger[data-state="selected"] {

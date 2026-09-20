@@ -98,6 +98,9 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                       color="white"
                       shape="square"
                       size="md"
+                      // 비활성 슬라이드는 aria-hidden="true"라, 안에 포커스 가능한 링크가
+                      // 남아 있으면 안 된다(axe aria-hidden-focus, Step 7 QA에서 발견).
+                      tabIndex={i === index ? undefined : -1}
                       data-track-cat="main_hero"
                       data-track-action="cta_click"
                       data-track-label={slide.title}

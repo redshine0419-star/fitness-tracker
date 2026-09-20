@@ -281,3 +281,59 @@ $ PW_CHROMIUM_PATH=... npx playwright test
 **질문**: 없음
 
 ---
+
+## Step 7 — QA (verify 전체 / axe / Lighthouse / 접근성 수동 점검) (완료)
+
+**변경한 파일**
+- `tests/e2e/a11y.spec.ts` — `@axe-core/playwright`로 `/`, `/coming-soon` 스캔. `color-contrast`(§5.5 known issue)를 제외한 serious/critical 위반 0 검증 + known issue 개수를 콘솔에 보고
+- `tests/e2e/network-allowlist.spec.ts` — §14.2 네트워크 허용 목록(자기 자신/GTM/영상 재생 후 youtube-nocookie) 검증, 영상 재생 전 youtube-nocookie 요청이 없는지도 함께 확인
+- **버그 수정 3건** (모두 axe/Lighthouse로 이번 QA 단계에서 새로 발견):
+  - `src/components/sections/home/HeroSlider.tsx` — 비활성 슬라이드(`aria-hidden="true"`)의 CTA 링크가 키보드로 여전히 포커스 가능했던 문제 (`tabIndex={-1}` 추가, DEVIATIONS #12)
+  - `src/components/ui/Dropdown.module.css` — Footer "관련 사이트" 트리거 기본 텍스트가 `--text-04`(대비 2.8:1)라 WCAG AA 미달이던 문제 (`--text-03`로 수정, DEVIATIONS #13)
+  - `src/components/sections/home/FeaturedVideo.tsx` — "자세히 보기" 버튼에 §9가 요구하는 대상 명시 `aria-label` 누락 (추가, DEVIATIONS #14)
+
+**검증 결과**
+```
+$ npm run lint && npm run typecheck && npm run check:tokens && npm run build
+✔ 전부 통과 (34개 CSS 파일, 정적 라우트 7개 생성)
+
+$ PW_CHROMIUM_PATH=... npx playwright test
+✔ 57 tests, 51 passed, 6 skipped(뷰포트 조건부) — 0 failed
+
+axe (/,/coming-soon, 3 뷰포트 × 2 페이지):
+✔ color-contrast를 제외한 serious/critical 위반 0
+ℹ known issue: color-contrast 위반 노드 8개(§5.5 — §16 결정에 따라 DS 원안 --btn-primary-text/--text-accent 유지)
+
+Lighthouse(모바일, 참고 목표 — npx lighthouse, 이 샌드박스에 프로젝트 의존성으로 추가하지 않음):
+- 1차 실행: Performance 75 / Accessibility 90 / SEO 92(link-text 지적 → 위 FeaturedVideo 수정으로 해결)
+- 재실행 2회(동일 사이트, 재빌드 없이): Performance/Accessibility/SEO가 각각 다르게, 그것도 실제로는
+  존재하는 <title>/<html lang>/<main>이 "없다"고 보고하는 등 서로 모순된 결과를 반복 — curl로 실제
+  HTML에 세 요소가 모두 존재함을 직접 확인함. 3회 서로 다른 방식으로 실패해 이 샌드박스에서
+  Lighthouse 자동 측정 자체가 신뢰할 수 없다고 판단하고 중단함(§14.3은 "참고 목표"로 명시돼 있어
+  하드 게이트가 아님). 실제 접근성 근거는 axe(위, 안정적으로 반복 재현) + 아래 수동 점검으로 대신함.
+```
+
+**스크린샷**: `docs/screenshots/step-7/{1920,768,360}.png`
+
+**§9 접근성 수동 점검 체크리스트**
+- Skip link 3개, 포커스 시에만 노출 (`SkipNav.module.css` `top:-9999px` → `:focus{top:0}`) — 확인
+- `<html lang="ko">`, h1 1개(시각적 숨김), 섹션 h2 + `aria-labelledby` — 확인
+- 키보드 조작: 메가메뉴/모바일메뉴/탭/캐러셀/모달 — `header.spec.ts`, `home-sections.spec.ts`로 자동화 확인
+- 반복 링크 "자세히 보기" 대상 명시 — StoryBento는 카드 전체가 한 링크(제목 포함)라 이미 충분, FeaturedVideo는 이번에 aria-label 추가(위 버그 수정)
+- 폼: `<label for>`, `aria-invalid`+`aria-describedby`, 첫 오류 필드 포커스 — `Input.tsx` 확인, `newsletter-video.spec.ts`로 자동화 확인
+- 터치 타깃: IconButton 44/48px, Button 2X-small(26px)은 `/dev/components` 카탈로그에만 존재(실제 화면 미사용) — 확인
+- 색상만으로 상태 구분 금지: 폼 오류는 테두리+문구 병행(`Input`의 `errorMessage`) — 확인
+- 자동 모션 정지 수단: Hero Pause 버튼 + `prefers-reduced-motion` 시 자동재생 끔 — 기존 구현 확인(Step 3)
+
+**미해결 항목 (최종 보고에도 포함 예정)**
+1. §5.5 명도 대비 — `--btn-primary-text`(흰 텍스트/초록 배경)·`--text-accent`(초록 텍스트) 조합이 WCAG AA 4.5:1 미달(axe 기준 8개 노드). §16 사용자 결정에 따라 DS 원안을 유지했고, 두 토큰은 `tokens.css`에서 한 줄만 바꾸면 되도록 분리해 뒀다.
+2. Lighthouse 자동 측정이 이 샌드박스 환경에서 불안정(위 검증 결과 참고) — 실제 배포 환경에서 재측정 필요.
+3. Pretendard Variable 폰트가 약 2MB(전체 글립셋)로 큼 — Phase 2에서 사용 글립 범위로 서브셋팅하면 LCP/폰트 로딩 개선 여지가 있음.
+4. `site.config.ts`/`footer.ts`/`home.ts`의 `'{{TODO}}'` 15건 — 실제 단체 정보 확정 전까지 유지(§2-2).
+
+**DS와 다르게 한 점**
+- DEVIATIONS.md #12(Hero tabIndex), #13(Dropdown 대비), #14(FeaturedVideo aria-label) 참고.
+
+**질문**: 없음
+
+---
