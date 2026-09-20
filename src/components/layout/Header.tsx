@@ -109,7 +109,7 @@ export function Header() {
             로그인
           </Link>
           <Button
-            href="/coming-soon/donate"
+            href="/donate"
             size="sm"
             className={styles.desktopOnly}
             data-track-cat="header"

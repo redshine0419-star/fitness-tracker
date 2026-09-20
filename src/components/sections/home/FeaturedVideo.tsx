@@ -73,7 +73,7 @@ export function FeaturedVideo({ videoId, thumbnail, category, title, description
             자세히 보기
           </Button>
           <Button
-            href="/coming-soon/donate"
+            href="/donate"
             shape="square"
             data-track-cat="main_featured"
             data-track-action="cta_donate"

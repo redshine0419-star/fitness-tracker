@@ -1,0 +1,4 @@
+.section {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+}

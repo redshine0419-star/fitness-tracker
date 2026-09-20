@@ -28,7 +28,7 @@ export const heroSlides: HeroSlide[] = [
     label: "긴급구호",
     title: "위기의 순간, 곁에 있겠습니다",
     description: "재난과 위기 상황에 놓인 아동과 가족에게 신속한 구호를 전합니다.",
-    cta: { label: "긴급구호 소식 보기", href: "/coming-soon/story/news" },
+    cta: { label: "긴급구호 소식 보기", href: "/news" },
   },
   {
     image: {
@@ -106,11 +106,11 @@ function campaignImage(illustration: string) {
 
 export const campaigns: Campaign[] = [
   { image: campaignImage("child-sponsorship"), category: "아동결연", title: "1:1 아동결연 캠페인", description: "한 아이와 결연해 지속적인 성장을 함께 지켜보세요.", href: "/coming-soon/donate/sponsorship" },
-  { image: campaignImage("community-center"), category: "국내사업", title: "지역아동센터 학습 지원", description: "국내 취약계층 아동의 학습 격차 해소를 돕습니다.", href: "/coming-soon/programs/domestic" },
-  { image: campaignImage("clean-water"), category: "해외사업", title: "식수 위생 개선 사업", description: "깨끗한 물이 없는 지역에 우물과 위생 시설을 짓습니다.", href: "/coming-soon/programs/international" },
-  { image: campaignImage("emergency-relief"), category: "긴급구호", title: "재난 긴급구호 캠페인", description: "재난과 분쟁 지역의 아동과 가족에게 구호물품을 전합니다.", href: "/coming-soon/story/news" },
+  { image: campaignImage("community-center"), category: "국내사업", title: "지역아동센터 학습 지원", description: "국내 취약계층 아동의 학습 격차 해소를 돕습니다.", href: "/programs" },
+  { image: campaignImage("clean-water"), category: "해외사업", title: "식수 위생 개선 사업", description: "깨끗한 물이 없는 지역에 우물과 위생 시설을 짓습니다.", href: "/programs" },
+  { image: campaignImage("emergency-relief"), category: "긴급구호", title: "재난 긴급구호 캠페인", description: "재난과 분쟁 지역의 아동과 가족에게 구호물품을 전합니다.", href: "/news" },
   { image: campaignImage("gift-box"), category: "캠페인", title: "희망의 선물상자", description: "연말연시, 전 세계 아동에게 희망의 선물을 전합니다.", href: "/coming-soon/donate/campaign" },
-  { image: campaignImage("education"), category: "교육사업", title: "청소년 진로 교육 프로그램", description: "청소년이 스스로 미래를 그릴 수 있도록 돕습니다.", href: "/coming-soon/programs/education" },
+  { image: campaignImage("education"), category: "교육사업", title: "청소년 진로 교육 프로그램", description: "청소년이 스스로 미래를 그릴 수 있도록 돕습니다.", href: "/programs" },
 ];
 
 function newsImage(illustration: string) {
@@ -130,7 +130,7 @@ export const featuredVideo = {
 };
 
 export const quickLinks: { icon: "book-open" | "mail" | "users" | "store" | "building"; label: string; href: string }[] = [
-  { icon: "book-open", label: "후원 안내", href: "/coming-soon/donate" },
+  { icon: "book-open", label: "후원 안내", href: "/donate" },
   { icon: "mail", label: "참여 프로그램", href: "/coming-soon/story/programs" },
   { icon: "users", label: "정기후원 클럽", href: "/coming-soon/donate/regular-club" },
   { icon: "store", label: "온라인 스토어", href: "/coming-soon" },

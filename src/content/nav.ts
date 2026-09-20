@@ -10,7 +10,7 @@ function promoImage(illustration: string) {
 export const navItems: NavItem[] = [
   {
     label: "후원하기",
-    href: "/coming-soon/donate",
+    href: "/donate",
     groups: [
       {
         title: "캠페인 후원",
@@ -44,12 +44,12 @@ export const navItems: NavItem[] = [
   },
   {
     label: "스토리",
-    href: "/coming-soon/story",
+    href: "/story",
     groups: [
       {
         title: "이야기",
         links: [
-          { label: "스토리", href: "/coming-soon/story/stories" },
+          { label: "스토리", href: "/story" },
           { label: "결과보고", href: "/coming-soon/story/reports" },
           { label: "영상", href: "/coming-soon/story/videos" },
         ],
@@ -57,7 +57,7 @@ export const navItems: NavItem[] = [
       {
         title: "소식",
         links: [
-          { label: "공지·뉴스", href: "/coming-soon/story/news" },
+          { label: "공지·뉴스", href: "/news" },
           { label: "소식지", href: "/coming-soon/story/newsletter-archive" },
           { label: "뉴스레터", href: "/coming-soon/story/newsletter" },
           { label: "자료실", href: "/coming-soon/story/resources" },
@@ -69,19 +69,19 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage("story-people"), title: "최근 활동 이야기 보기", href: "/coming-soon/story/stories" },
+      { image: promoImage("story-people"), title: "최근 활동 이야기 보기", href: "/story" },
       { image: promoImage("celebration"), title: "참여 프로그램 살펴보기", href: "/coming-soon/story/programs" },
     ],
   },
   {
     label: "기관소개",
-    href: "/coming-soon/about",
+    href: "/about",
     groups: [
       {
         title: "소개",
         links: [
-          { label: "소개", href: "/coming-soon/about/intro" },
-          { label: "설립 정신", href: "/coming-soon/about/mission" },
+          { label: "소개", href: "/about" },
+          { label: "설립 정신", href: "/about#mission-heading" },
           { label: "CI", href: "/coming-soon/about/ci" },
           { label: "연혁", href: "/coming-soon/about/history" },
         ],
@@ -103,33 +103,33 @@ export const navItems: NavItem[] = [
       },
     ],
     promo: [
-      { image: promoImage("mission"), title: "설립 정신 알아보기", href: "/coming-soon/about/mission" },
+      { image: promoImage("mission"), title: "설립 정신 알아보기", href: "/about#mission-heading" },
       { image: promoImage("transparency-report"), title: "투명경영 보고서 보기", href: "/coming-soon/about/finance" },
     ],
   },
   {
     label: "사업안내",
-    href: "/coming-soon/programs",
+    href: "/programs",
     groups: [
       {
         title: "국제협력사업",
-        links: [{ label: "국제협력사업", href: "/coming-soon/programs/international" }],
+        links: [{ label: "국제협력사업", href: "/programs" }],
       },
       {
         title: "국내복지사업",
-        links: [{ label: "국내복지사업", href: "/coming-soon/programs/domestic" }],
+        links: [{ label: "국내복지사업", href: "/programs" }],
       },
       {
         title: "교육·연구",
         links: [
-          { label: "교육사업", href: "/coming-soon/programs/education" },
+          { label: "교육사업", href: "/programs" },
           { label: "연구소", href: "/coming-soon/programs/institute" },
         ],
       },
     ],
     promo: [
-      { image: promoImage("global-cooperation"), title: "국제협력사업 살펴보기", href: "/coming-soon/programs/international" },
-      { image: promoImage("community-center"), title: "국내복지사업 살펴보기", href: "/coming-soon/programs/domestic" },
+      { image: promoImage("global-cooperation"), title: "국제협력사업 살펴보기", href: "/programs" },
+      { image: promoImage("community-center"), title: "국내복지사업 살펴보기", href: "/programs" },
     ],
   },
   {

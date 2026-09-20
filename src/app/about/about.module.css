@@ -1,0 +1,100 @@
+.missionSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+}
+
+.missionGrid {
+  align-items: center;
+}
+
+.missionImageWrap {
+  grid-column: span 6;
+  border-radius: var(--radius-12);
+  overflow: hidden;
+  background: var(--color-bg-default);
+}
+
+.missionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.missionText {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.valuesSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.valuesGrid {
+  gap: var(--space-6);
+}
+
+.valueCard {
+  grid-column: span 4;
+  padding: var(--space-6);
+  border-radius: var(--radius-12);
+  background: var(--color-bg-default);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.statsSection {
+  background: var(--green-700);
+  padding-top: var(--section-gap-sm);
+  padding-bottom: var(--section-gap-sm);
+}
+
+.statsGrid {
+  gap: var(--space-6);
+}
+
+.statCard {
+  grid-column: span 3;
+  text-align: center;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.statValue {
+  color: var(--white);
+}
+
+.ctaSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .missionImageWrap,
+  .missionText {
+    grid-column: span 6;
+  }
+
+  .valueCard {
+    grid-column: span 6;
+  }
+
+  .statCard {
+    grid-column: span 6;
+  }
+}

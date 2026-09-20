@@ -31,7 +31,7 @@ export function StoryBento({ tabs }: StoryBentoProps) {
         eyebrow="STORY"
         title="스토리"
         description="세상을 위한 좋은 변화, 다양한 이야기를 전합니다."
-        moreHref="/coming-soon/story/stories"
+        moreHref="/story"
         moreLabel="스토리 더보기"
       >
         <div className={styles.tabRow}>

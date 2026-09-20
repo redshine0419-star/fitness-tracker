@@ -85,7 +85,7 @@ cp .env.example .env.local
 | `name` | `"글로벌호프"` | 단체 이름. 페이지 제목(브라우저 탭)과 검색 결과에 노출됩니다. |
 | `tagline` | `"아동과 지역사회를..."` | 한 줄 슬로건. 화면에는 안 보이지만(시각적 숨김 제목) 검색엔진이 읽습니다. |
 | `description` | (2문장 정도) | 검색 결과 요약 문구. 120자 내외 권장. |
-| `logo.wordmark` | `"글로벌호프"` | 헤더 좌측 로고 자리에 글자로 표시됩니다(이미지 로고는 아직 미지원, 3.5절 참고). |
+| `logo.wordmark` | `"글로벌호프"` | 헤더 좌측 로고 자리에 글자로 표시됩니다(이미지 로고는 아직 미지원, 3.6절 참고). |
 | `contact.phone` / `email` / `hours` | `"02-1234-5678"` 등 | 푸터 고객센터 정보. |
 | `sns.youtube` / `blog` / `instagram` | `"https://..."` | 실제 SNS 주소가 정해지면 이 값을 채우세요(그 전엔 "준비 중" 페이지로 연결됩니다). |
 
@@ -121,7 +121,20 @@ cp .env.example .env.local
 - `footerEntities` — **법인 정보(단체명/대표자/사업자등록번호/주소).** 지금은 전부
   `{{TODO}}`이며, 실제 값이 정해지는 대로 반드시 채워야 하는 항목입니다(하단 §4 참고).
 
-### 3.5 이미지 교체하기
+### 3.5 서브페이지 콘텐츠 — `about.ts` / `programs.ts` / `donate.ts` / `story.ts` / `news.ts`
+
+메인 페이지 외에 아래 5개 서브페이지가 있습니다(스펙의 Phase 1 범위 밖이지만 요청에 따라
+추가). 나머지 메뉴 링크는 여전히 `/coming-soon` 준비중 화면입니다.
+
+| 경로 | 콘텐츠 파일 | 내용 |
+|---|---|---|
+| `/about` | `src/content/about.ts` | 설립 정신, 일하는 방식(가치 카드 3개), 기관 현황 숫자 4개(전부 `{{TODO}}`) |
+| `/programs` | `src/content/programs.ts` | 사업 분야 카드 3개(국제협력/국내복지/교육·연구) |
+| `/donate` | `src/content/donate.ts` | 후원 방법 카드 4개(정기/일시/결연/기업) |
+| `/story` | `src/content/story.ts` | `/story` 목록 페이지 전용 탭별 카드 9개(홈 화면의 `storyTabs`와는 별개 콘텐츠) |
+| `/news` | `src/content/news.ts` | `/news` 목록 페이지 전용 소식 9건(홈 화면의 `newsItems`와는 별개 콘텐츠) |
+
+### 3.6 이미지 교체하기
 
 지금은 사진 대신 `public/illustrations/` 폴더의 자체 제작 일러스트(SVG, 아동결연·긴급구호·
 캠페인 등 주제별 12종)를 쓰고 있습니다. 실제 사진 저작권·초상권 문제를 피하기 위한 임시
@@ -143,10 +156,10 @@ SNS 공유 시 보이는 미리보기 이미지는 `public/og-image.png`(1200×6
 
 ## 4. 지금 비어 있는 값(`{{TODO}}`) 목록
 
-아래 12곳은 실제 단체 정보가 정해지기 전까지 일부러 비워둔 자리입니다. 실제 서비스를
+아래 16곳은 실제 단체 정보가 정해지기 전까지 일부러 비워둔 자리입니다. 실제 서비스를
 시작하기 전에 전부 채워야 합니다. (`npm run check:todo`로 언제든 남은 개수를 다시 셀 수
 있습니다 — 이 스크립트는 코드 설명 주석과 타입 정의에 쓰인 `{{TODO}}`라는 글자까지 함께
-세기 때문에 실제로는 15건으로 나오지만, 진짜로 채워야 할 콘텐츠 값은 아래 12곳입니다.)
+세기 때문에 실제로는 20건으로 나오지만, 진짜로 채워야 할 콘텐츠 값은 아래 16곳입니다.)
 
 | 파일 | 항목 | 무엇을 채워야 하나 |
 |---|---|---|
@@ -160,6 +173,7 @@ SNS 공유 시 보이는 미리보기 이미지는 `public/og-image.png`(1200×6
 | `src/content/footer.ts` | `footerEntities[0].bizNo` | 사업자등록번호 |
 | `src/content/footer.ts` | `footerEntities[0].address` | 사업장 주소 |
 | `src/content/home.ts` | `trustSection.credentials[0..2].text` | 인증·수상 3건의 문구 (밴드 자체가 `enabled:false`라 채운 뒤 켜야 화면에 보임) |
+| `src/content/about.ts` | `orgStats[0..3].value` | 설립연도/국내 조직/해외 협력국/결연 아동 수 (`/about` 페이지 하단 숫자) |
 
 그 밖에 `src/components/sections/home/Newsletter.tsx`의 개인정보 수집·이용 동의 팝업
 표(수집항목/이용목적/보유기간)도 지금은 전부 `{{TODO}}`이니 실제 개인정보처리방침 확정 후

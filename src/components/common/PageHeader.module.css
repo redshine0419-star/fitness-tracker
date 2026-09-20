@@ -1,0 +1,56 @@
+.header {
+  background: var(--color-bg-default);
+  padding-top: var(--space-10);
+  padding-bottom: var(--section-gap-sm);
+}
+
+.breadcrumb {
+  margin-bottom: var(--space-6);
+}
+
+.breadcrumbList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 14px;
+  color: var(--text-03);
+}
+
+.breadcrumbItem a {
+  color: var(--text-03);
+}
+
+.breadcrumbItem a:hover {
+  color: var(--text-01);
+}
+
+.breadcrumbSeparator {
+  color: var(--neutral-300);
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  margin: 0 0 var(--space-3);
+}
+
+.title {
+  margin: 0 0 var(--space-4);
+  color: var(--text-01);
+}
+
+.description {
+  max-width: 640px;
+  color: var(--text-02);
+}

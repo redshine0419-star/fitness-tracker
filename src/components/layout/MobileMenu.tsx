@@ -144,7 +144,7 @@ export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
         </div>
 
         <Button
-          href="/coming-soon/donate"
+          href="/donate"
           shape="square"
           size="lg"
           fullWidth

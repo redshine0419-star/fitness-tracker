@@ -21,7 +21,7 @@ export function NewsBoard({ news }: NewsBoardProps) {
         eyebrow="NEWS"
         title="소식"
         description="다양한 소식을 전합니다."
-        moreHref="/coming-soon/story/news"
+        moreHref="/news"
         moreLabel="소식 더보기"
         moreTrackCategory="main_news"
         moreTrackAction="more_click"

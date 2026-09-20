@@ -1,0 +1,18 @@
+.section {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+}
+
+.grid {
+  gap: var(--space-6);
+}
+
+.cardSlot {
+  grid-column: span 4;
+}
+
+@media (max-width: 767px) {
+  .cardSlot {
+    grid-column: span 6;
+  }
+}
