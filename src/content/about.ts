@@ -14,12 +14,7 @@ export const missionSection: {
   title: string;
   paragraphs: string[];
 } = {
-  image: {
-    pc: "/photos/youth-group.jpg",
-    alt: "지원을 받고 성장한 청년들이 나란히 앉아 웃고 있다.",
-    width: 1000,
-    height: 563,
-  },
+  image: { pc: "/illustrations/mission.svg", alt: "", width: 800, height: 600 },
   title: "설립 정신",
   paragraphs: [
     "우리는 아동과 지역사회가 스스로 일어설 수 있는 힘을 기르도록 돕기 위해 시작되었습니다.",
