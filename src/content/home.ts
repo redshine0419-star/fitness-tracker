@@ -6,11 +6,10 @@ import type { Campaign, Credential, HeroSlide, NewsItem, StoryItem } from "./typ
 export const heroSlides: HeroSlide[] = [
   {
     image: {
-      pc: "/illustrations/child-sponsorship.svg",
-      mobile: "/illustrations/child-sponsorship.svg",
-      alt: "",
-      width: 1600,
-      height: 720,
+      pc: "/photos/thank-you-korea.jpg",
+      alt: "후원으로 도움을 받은 해외 지역 아동이 감사 인사를 적은 손편지를 들고 웃고 있다.",
+      width: 1920,
+      height: 606,
     },
     label: "아동결연",
     title: "한 아이의 하루가 달라집니다",
@@ -19,11 +18,10 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     image: {
-      pc: "/illustrations/emergency-relief.svg",
-      mobile: "/illustrations/emergency-relief.svg",
-      alt: "",
-      width: 1600,
-      height: 720,
+      pc: "/photos/dental-clinic.webp",
+      alt: "해외 의료 봉사 현장에서 의료진이 어린이 환자를 진료하고 있다.",
+      width: 431,
+      height: 356,
     },
     label: "긴급구호",
     title: "위기의 순간, 곁에 있겠습니다",
@@ -32,11 +30,10 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     image: {
-      pc: "/illustrations/monthly-giving.svg",
-      mobile: "/illustrations/monthly-giving.svg",
-      alt: "",
-      width: 1600,
-      height: 720,
+      pc: "/photos/school-supplies.jpg",
+      alt: "학용품을 선물 받은 학생들이 교복을 입고 환하게 웃고 있다.",
+      width: 1920,
+      height: 606,
     },
     label: "정기후원",
     title: "매달 작은 나눔이 큰 변화를 만듭니다",
