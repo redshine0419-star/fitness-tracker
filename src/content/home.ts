@@ -89,6 +89,26 @@ export const campaigns: Campaign[] = [
 
 const newsImage = { pc: "/placeholder/gray.svg", alt: "", width: 640, height: 400 };
 
+// S8 대표 캠페인(영상) — 실제 캠페인 영상이 아직 없어, youtube-nocookie facade의
+// 동작(클릭 전 썸네일만 렌더링 → 클릭 시 iframe 삽입)을 보여주기 위해 기술 데모에
+// 널리 쓰이는 공개 영상 ID를 사용했다. 실제 서비스 전 반드시 교체할 것.
+export const featuredVideo = {
+  videoId: "dQw4w9WgXcQ", // TODO: 실제 캠페인 영상 ID로 교체
+
+  thumbnail: { pc: "/placeholder/gray.svg", alt: "", width: 960, height: 540 },
+  category: "캠페인",
+  title: "함께 만든 1년, 영상으로 만나보세요",
+  description: "지난 한 해 후원자 여러분과 함께 만든 변화를 짧은 영상으로 전해드립니다.",
+};
+
+export const quickLinks: { icon: "book-open" | "mail" | "users" | "store" | "building"; label: string; href: string }[] = [
+  { icon: "book-open", label: "후원 안내", href: "/coming-soon/donate" },
+  { icon: "mail", label: "참여 프로그램", href: "/coming-soon/story/programs" },
+  { icon: "users", label: "정기후원 클럽", href: "/coming-soon/donate/regular-club" },
+  { icon: "store", label: "온라인 스토어", href: "/coming-soon" },
+  { icon: "building", label: "기업 후원", href: "/coming-soon/donate/corporate" },
+];
+
 export const newsItems: NewsItem[] = [
   { image: newsImage, category: "공지사항", title: "2026년 후원금 사용 내역을 공개합니다", date: "2026-09-01", href: "/coming-soon/story/news" },
   { image: newsImage, category: "보도자료", title: "식수 위생 개선 사업, 지역 300세대에 새 우물 제공", date: "2026-08-20", href: "/coming-soon/story/news" },

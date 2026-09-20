@@ -34,7 +34,29 @@ export function CampaignCarousel({ campaigns }: CampaignCarouselProps) {
     onSelect(emblaApi);
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+
+    // embla's very first measurement can race both the browser's own layout pass
+    // for this section (percentage-based slide widths via CSS `calc()`) and the
+    // self-hosted variable font swapping in (display:swap), either of which can
+    // shift measured widths just after mount and leave scrollSnapList() wrong
+    // until something else forces a reInit. Re-measuring once the next frame has
+    // painted, and again once the font is confirmed loaded, makes the initial
+    // page count reliable without depending on a user interaction to "correct" it.
+    const raf = requestAnimationFrame(() => {
+      emblaApi.reInit();
+      onSelect(emblaApi);
+    });
+
+    let cancelled = false;
+    void document.fonts.ready.then(() => {
+      if (cancelled) return;
+      emblaApi.reInit();
+      onSelect(emblaApi);
+    });
+
     return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
     };

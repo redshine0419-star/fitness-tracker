@@ -1,0 +1,78 @@
+.layout {
+  align-items: start;
+}
+
+.intro {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.intro h2,
+.intro p {
+  margin: 0;
+}
+
+.intro p {
+  color: var(--text-03);
+}
+
+.form {
+  grid-column: 1 / -1;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field {
+  flex: 1;
+}
+
+.submitButton {
+  flex-shrink: 0;
+}
+
+.checkboxRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.consentRow {
+  margin-top: var(--space-3);
+}
+
+.viewLink {
+  color: var(--color-link-default);
+  text-decoration: underline;
+}
+
+.errorText {
+  margin-top: var(--space-1);
+  font-size: 14px;
+  color: var(--color-brand-point);
+}
+
+@media (min-width: 768px) {
+  .row {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 1024px) {
+  .intro {
+    grid-column: 1 / span 4;
+    margin-bottom: 0;
+  }
+  .form {
+    grid-column: 5 / span 8;
+  }
+}

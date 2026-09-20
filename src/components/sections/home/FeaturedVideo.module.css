@@ -1,0 +1,89 @@
+.layout {
+  align-items: center;
+}
+
+.videoWrap {
+  grid-column: 1 / -1;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-12);
+  box-shadow: var(--shadow-neutral-02);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.facadeButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playCircle {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-black);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.text {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.text h3,
+.text p {
+  margin: 0;
+  color: var(--text-01);
+}
+
+.text p {
+  color: var(--text-02);
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.buttons > * {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .videoWrap {
+    grid-column: 1 / span 7;
+    margin-bottom: 0;
+  }
+  .text {
+    grid-column: 9 / span 4;
+  }
+  .buttons {
+    gap: var(--space-3);
+  }
+  .buttons > * {
+    flex: none;
+  }
+}

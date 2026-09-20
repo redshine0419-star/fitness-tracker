@@ -212,3 +212,33 @@ $ npm run verify
 **질문**: 없음
 
 ---
+
+## Step 5 — S8~S10 (영상 facade / 퀵링크 / 뉴스레터) (완료)
+
+**변경한 파일**
+- `src/content/home.ts` — featuredVideo(공개 영상 ID로 facade 데모), quickLinks(5)
+- `src/components/sections/home/FeaturedVideo.tsx` — 클릭 전 썸네일+재생 버튼만 렌더링, 클릭 시에만 `youtube-nocookie.com` iframe 삽입(§14.2 네트워크 허용목록과 일치)
+- `src/components/sections/home/QuickLinks.tsx` — Desktop/Tablet 5등분 그리드, Mobile 목록 + DS Right 아이콘(`CarouselRightIcon` 재사용, lucide ChevronRight 아님)
+- `src/components/sections/home/Newsletter.tsx`, `Newsletter.module.css` — 4종 검증(이름/이메일/관심사/동의), blur+submit 검증, 첫 오류 필드 포커스, 성공 모달(저장 안 됨 문구 포함), 동의 모달(Table)
+- `src/app/api/newsletter/route.ts` — mock: 서버에서도 동일 규칙으로 검증 후 200/400만 반환, 저장 없음
+- `src/components/ui/Input.tsx`, `Checkbox.tsx` — React 19 방식으로 `ref` prop 지원 추가(뉴스레터의 "첫 오류 필드로 포커스" 요구를 위해 필요)
+- `src/app/page.tsx`, `page.module.css` — 나머지 섹션 조립 + §7.0 padding 표 적용 (Phase 1 메인 페이지 섹션 전부 완료: S1~S12)
+- `tests/e2e/newsletter-video.spec.ts` — 영상 facade, 뉴스레터 검증 4종 + 성공 모달 + 동의 모달
+- **버그 수정**: `CampaignCarousel`의 embla 초기 측정 레이스 조건 (DEVIATIONS #10)
+
+**검증 결과**
+```
+$ npm run verify
+✔ lint / typecheck / check:tokens(34개 파일) / build(+ /api/newsletter) 통과
+✔ test:e2e — 36 tests, 31 passed, 5 skipped(뷰포트 조건부) — 0 failed (반복 실행으로 캐러셀 수정 안정성 확인)
+```
+
+**스크린샷**: `docs/screenshots/step-5/{1920,768,360}.png` — 이것으로 홈페이지 S1~S12 전 섹션이 화면에 모두 조립되었습니다.
+
+**DS와 다르게 한 점**
+- DEVIATIONS.md #10(캐러셀 레이스 조건 수정) 참고.
+- 영상 facade의 데모 영상 ID는 실제 캠페인 영상이 없어 기술 데모용으로 널리 쓰이는 공개 영상을 사용했습니다(실제 서비스 전 교체 대상, `home.ts` 주석에 명시).
+
+**질문**: 없음
+
+---

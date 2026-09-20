@@ -23,3 +23,21 @@
   padding-bottom: var(--section-gap-md);
   background: var(--color-bg-default);
 }
+
+.featuredSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+  background: var(--white);
+}
+
+.quickLinksSection {
+  padding-top: var(--section-gap-sm);
+  padding-bottom: var(--section-gap-sm);
+  background: var(--color-bg-default);
+}
+
+.newsletterSection {
+  padding-top: var(--section-gap-md);
+  padding-bottom: var(--section-gap-md);
+  background: var(--white);
+}
