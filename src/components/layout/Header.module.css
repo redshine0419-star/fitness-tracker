@@ -41,7 +41,9 @@
 }
 
 .navItem {
-  position: relative;
+  /* position: relative를 두지 않아야 MegaMenu의 position:absolute;left:0;right:0이
+     이 <li>가 아니라 .header(position:sticky)를 기준으로 전체 폭에 펼쳐진다.
+     Step 7까지 실제로 열어서 폭을 눈으로 확인하지 못해 놓친 레이아웃 버그. */
 }
 
 .navLink {
