@@ -5,6 +5,14 @@
 
 ---
 
+### 18. 사용자 업로드 디자인 목업(`Main.dc.html`)에 맞춰 S1 로고·S4 PromoBanner 구조 수정 (서브페이지 작업 이후)
+
+- **무엇을**: 사용자가 업로드한 zip에 담긴 "메인 · PC 1920" 디자인 목업(Claude Design Artifact 내보내기, 실제 이미지 없이 정확한 픽셀·색상 스펙만 담긴 `.dc.html`)과 현재 구현을 섹션별로 대조했다. (1) S1 헤더 로고를 20px/700-weight 텍스트에서 28px/800-weight + 브랜드 컬러 8×8px 원형 점(`--color-brand-primary`)이 붙은 형태로 바꿨다. (2) S4 PromoBanner를 어두운 그라디언트 오버레이가 덮인 풀블리드 이미지 배너에서, 목업이 지정한 2단 카드(왼쪽: 연한 초록 배경(`--color-bg-green`)에 파란 배지+제목+설명, 오른쪽: 고정폭(데스크톱 42%) 이미지, 데스크톱 높이 200px)로 다시 만들었다. 이 과정에서 이전에 쓰던 와이드 배너 전용 일러스트(`promo-banner-pattern.svg`, 1600×200)는 더 이상 쓰이지 않아 삭제하고, 이미 있는 `celebration.svg`(560×200)로 교체했다.
+- **왜**: 사용자가 "이 디자인으로 레이아웃을 맞춰줘"를 명시적으로 확정했다(AskUserQuestion, "추천" 옵션 선택). 목업은 11개 섹션 전체에 대해 정확한 스펙을 담고 있었는데, 대부분(Hero 오버레이 그라디언트, Badge01 border variant 색상, TrustSection 밴드 배경, 그리드 span/간격 토큰, Footer SNS 버튼 크기 등)은 이미 일치했다. 대조 결과 로고와 PromoBanner 두 곳만 구조적으로 달라, 이 두 곳만 목업에 맞춰 수정했다.
+- **대안**: 시간 제약상 11개 섹션 전체를 픽셀 단위로 재검증하지는 못했다. QuickLinks 아이콘 stroke 색(목업은 `#333333`/`--text-02` 명시, 현재는 상속된 검정), Footer `.contactHours` 폰트 크기(목업 18px vs 현재 16px 고정), Footer `.privacyNote` 데스크톱 크기(목업은 14px 유지 vs 현재 18px로 커짐) 등 시각적 영향이 작은 세부 사항은 의도적으로 손대지 않았다 — 사용자가 더 정밀한 대조를 원하면 후속 작업으로 처리할 수 있다.
+
+---
+
 ### 17. Header — 메가메뉴 hover 유지 로직을 `.navItem`에서 `.header`로 이동 (버그 수정, 서브페이지 작업 이후)
 
 - **무엇을**: 메가메뉴 폭 버그(DEVIATIONS 없음, 이전 커밋에서 `.navItem`의 `position:relative` 제거로 수정)를 고치면서, `.panel`이 `.header`(position:sticky) 기준으로 전체 폭에 펼쳐지게 됐다. 그런데 열림/닫힘을 담당하는 `onMouseLeave={closeMenu}`는 여전히 작은 `<li>`(`.navItem`)에 붙어 있어서, 마우스가 링크에서 패널로 내려가는 도중 `<li>`의 작은 hover 영역과 `.header` 바닥에서 시작하는 패널 사이의 빈 공간(같은 `.header` 안이지만 `<li>`도 `.panel`도 아닌 배경 영역)을 지날 때 `<li>`의 `mouseleave`가 먼저 발동해, 패널에 마우스가 닿기도 전에 메뉴가 닫혀버리는 실제 버그가 있었다(사용자 리포트로 발견, Playwright로 단계별 마우스 이동을 재현해 정확한 좌표까지 확인).

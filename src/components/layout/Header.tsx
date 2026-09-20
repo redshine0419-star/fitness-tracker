@@ -58,6 +58,7 @@ export function Header() {
       <div className={`container ${styles.bar}`}>
         <div className={styles.left}>
           <Link href="/" className={styles.logo}>
+            <span className={styles.logoDot} aria-hidden="true" />
             {siteConfig.logo.wordmark}
           </Link>
 

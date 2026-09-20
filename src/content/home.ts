@@ -65,13 +65,8 @@ export const storyTabs: { id: string; label: string; items: StoryItem[] }[] = [
 ];
 
 export const promoBanner = {
-  image: {
-    pc: "/illustrations/promo-banner-pattern.svg",
-    mobile: "/illustrations/promo-banner-pattern.svg",
-    alt: "",
-    width: 1600,
-    height: 200,
-  },
+  image: { pc: "/illustrations/celebration.svg", alt: "", width: 560, height: 200 },
+  eyebrow: "참여 안내",
   href: "/coming-soon/donate/campaign",
   title: "함께 만드는 좋은 변화",
   description: "지금 참여하고 이달의 캠페인 소식을 받아보세요.",

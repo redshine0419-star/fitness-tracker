@@ -44,6 +44,7 @@ export default function HomePage() {
         <PromoBanner
           href={promoBanner.href}
           image={promoBanner.image}
+          eyebrow={promoBanner.eyebrow}
           title={promoBanner.title}
           description={promoBanner.description}
         />
