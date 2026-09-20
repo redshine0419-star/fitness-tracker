@@ -1,0 +1,98 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--overlay-modal);
+}
+
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  background: var(--white);
+  padding: var(--space-6) var(--space-4) var(--space-6);
+  overflow-y: auto;
+  animation: slideIn 200ms ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.topBar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--text-01);
+}
+
+.accordionNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordionItem {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.accordionTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-01);
+}
+
+.chevron[data-open] {
+  transform: rotate(180deg);
+}
+
+.accordionPanel {
+  padding-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.mobileGroupTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-03);
+}
+
+.mobileGroupLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mobileGroupLink {
+  font-size: 16px;
+  color: var(--text-02);
+}
+
+.bottomLinks {
+  display: flex;
+  gap: var(--space-4);
+  font-size: 14px;
+  color: var(--text-03);
+}

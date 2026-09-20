@@ -1,11 +1,11 @@
-// TODO(Step 3-5): replace with the assembled home sections (S1-S12).
+// TODO(Step 3-5): replace with the assembled home sections (S2-S10).
 export default function HomePage() {
   return (
     <div className="container">
       <div className="grid">
-        <h1 className="t-h1-bold" style={{ gridColumn: "1 / -1" }}>
-          Step 0 — 기반 작업 중
-        </h1>
+        <p className="t-h2-bold" style={{ gridColumn: "1 / -1" }}>
+          Step 2 — 레이아웃 작업 중 (Hero 이하 섹션은 Step 3~5에서 채워집니다)
+        </p>
       </div>
     </div>
   );

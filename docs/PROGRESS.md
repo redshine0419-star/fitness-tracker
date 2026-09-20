@@ -118,3 +118,38 @@ $ npm run verify
 **질문**: 없음
 
 ---
+
+## Step 2 — 레이아웃 (Header/MegaMenu/MobileMenu/Footer/FloatingBar) (완료)
+
+**변경한 파일**
+- `src/content/nav.ts` — GNB 5개(후원하기/스토리/기관소개/사업안내/나의후원) × 그룹 3열 × 프로모션 2개, 전부 `/coming-soon/...`로 연결
+- `src/content/footer.ts` — 푸터 링크 8개, 관련 사이트 드롭다운 옵션, `FooterEntity`(전부 `{{TODO}}`)
+- `src/components/layout/SkipNav.tsx` — 메뉴/본문/푸터 3개, 포커스 시에만 노출
+- `src/components/layout/Header.tsx` — sticky, 로고↔GNB 96px(예외 등록), hover(100ms 지연)+focus로 메가메뉴, Esc 닫기, bold 전환 시 폭 안 흔들리는 `::after` 트릭
+- `src/components/layout/MegaMenu.tsx` — 12컬럼 중 좌 span8(그룹 3열)/우 span4(프로모션 2장)
+- `src/components/layout/MobileMenu.tsx` — 전체화면 패널, 아코디언(한 번에 하나), 포커스 트랩, Esc, body 스크롤 잠금
+- `src/components/layout/Footer.tsx` — 상단 링크+SNS+관련사이트 드롭다운, 하단 법인정보+고객센터
+- `src/components/layout/FloatingBar.tsx` — Top 버튼(스크롤 1화면 초과 시) + Mobile/Tablet 하단 CTA 바(일시후원/정기후원)
+- `src/app/coming-soon/[[...slug]]/page.tsx` — noindex stub, catch-all
+- `src/app/layout.tsx` — SkipNav, 시각적으로 숨긴 `h1`(tagline), Header/Footer/FloatingBar 조립
+- `src/components/icons/VideoPlatformIcon.tsx`, `PhotoPlatformIcon.tsx` — DEVIATIONS #7 참고
+- `tests/e2e/header.spec.ts` — 메가메뉴 키보드 열기/Esc(Desktop), 모바일 메뉴 열기/포커스 트랩/아코디언/Esc(Mobile·Tablet)
+- `scripts/ds-exceptions.json`에 Header 로고↔GNB `gap:96px` 등록
+
+**검증 결과**
+```
+$ npm run verify
+✔ lint / typecheck / check:tokens(23개 파일) / build(/, /coming-soon/[[...slug]], /dev/components) 통과
+✔ test:e2e — 9 tests, 6 passed, 3 skipped(뷰포트 조건부 스킵) — 0 failed
+```
+§9 키보드 체크리스트 중 이 Step 범위(메가메뉴, 모바일 메뉴)는 자동화 테스트로 확인. 탭(←/→)·캐러셀·드롭다운·모달 키보드 동작은 Step 3~5에서 실제 사용처가 생기는 대로 테스트를 추가한다.
+
+**스크린샷**: `docs/screenshots/step-2/{1920,768,360}.png`
+
+**DS와 다르게 한 점**
+- DEVIATIONS.md #5(Footer 순서 통일), #6(플로팅 CTA 바 <1024로 확장), #7(SNS 아이콘 대체) 참고.
+- §5.5 지시대로 Footer 개인정보 안내 문구를 `--text-04`(#999, 대비 미달) 대신 `--text-03`(#666)로 올림 — 이건 스펙이 직접 요구한 조정이라 DEVIATIONS.md가 아닌 여기에만 기록.
+
+**질문**: 없음
+
+---

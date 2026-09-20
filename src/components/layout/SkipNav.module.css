@@ -1,0 +1,18 @@
+.skipNav {
+  position: relative;
+  z-index: var(--z-modal);
+}
+
+.link {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--neutral-black);
+  color: var(--white);
+  font-weight: 700;
+}
+
+.link:focus {
+  top: 0;
+}

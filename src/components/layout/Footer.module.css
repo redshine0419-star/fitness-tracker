@@ -1,0 +1,135 @@
+.footer {
+  background: var(--color-bg-default);
+  padding: var(--space-6) 0 var(--space-15);
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.linkList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 13px;
+}
+
+.link {
+  color: var(--text-01);
+}
+
+.accentLink {
+  color: var(--text-accent);
+}
+
+.snsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.snsIcons {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.snsButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+  color: var(--text-03);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-10);
+}
+
+.entities {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.entityLine {
+  font-size: 14px;
+  color: var(--text-03);
+}
+
+.privacyNote {
+  font-size: 14px;
+  color: var(--text-03);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.contactLabel {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-01);
+}
+
+.contactPhone {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-01);
+}
+
+.contactHours {
+  font-size: 16px;
+  color: var(--text-03);
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: var(--space-6) 0 var(--space-25);
+  }
+  .linkList {
+    gap: var(--space-10);
+    font-size: 18px;
+  }
+  .snsIcons {
+    gap: var(--space-3);
+  }
+  .snsButton {
+    width: 48px;
+    height: 48px;
+  }
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: var(--space-25);
+  }
+  .entityLine,
+  .privacyNote {
+    font-size: 18px;
+  }
+  .contact {
+    border-top: none;
+    padding-top: 0;
+    align-items: flex-end;
+  }
+  .contactPhone {
+    font-size: 40px;
+    letter-spacing: -0.02em;
+  }
+}

@@ -1,0 +1,70 @@
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  background: var(--white);
+  border-top: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-neutral-02);
+}
+
+.inner {
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-10);
+}
+
+.groups {
+  grid-column: span 8;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.groupTitle {
+  margin: 0 0 var(--space-4);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-01);
+}
+
+.groupLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.groupLink {
+  font-size: 16px;
+  color: var(--text-03);
+}
+
+.groupLink:hover {
+  color: var(--text-01);
+}
+
+.promoList {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.promoCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.promoImage {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-12);
+}
+
+.promoTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-01);
+}

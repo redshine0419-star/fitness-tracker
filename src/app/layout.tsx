@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { VisuallyHidden } from "@/components/common/VisuallyHidden";
+import { FloatingBar } from "@/components/layout/FloatingBar";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { SkipNav } from "@/components/layout/SkipNav";
 import { siteConfig } from "@/content/site.config";
 import "@/styles/globals.css";
 
@@ -22,7 +27,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body>{children}</body>
+      <body>
+        <SkipNav />
+        {/* PROJECT_SPEC §9 — 페이지에 h1은 이 1개뿐(시각적으로만 숨김). 섹션 제목은 h2. */}
+        <VisuallyHidden as="h1">{siteConfig.tagline}</VisuallyHidden>
+        <Header />
+        <main id="main-content">{children}</main>
+        <Footer />
+        <FloatingBar />
+      </body>
     </html>
   );
 }

@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-30) 0;
+}
+
+.eyebrow {
+  color: var(--text-accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-01);
+  margin: 0;
+}
+
+.description {
+  color: var(--text-03);
+  font-size: 16px;
+  max-width: 480px;
+}
