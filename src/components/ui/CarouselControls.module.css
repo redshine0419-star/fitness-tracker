@@ -1,0 +1,79 @@
+.counter {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-01);
+}
+
+.counterTotal {
+  font-weight: 400;
+  color: var(--carousel-counter-total);
+}
+
+/* ---- Carousel_pc ---- */
+.pcControls {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ---- Carousel_mobile pill ---- */
+.mobilePill {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2px 14px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+}
+
+/* ---- Indicator pill (PC) ---- */
+.indicatorPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-left: var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--indicator-pill-bg);
+}
+
+.divider {
+  width: 1px;
+  height: 14px;
+  background: var(--neutral-300);
+}
+
+.indicatorArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 34px;
+  color: var(--text-03);
+}
+
+.smallArrowIcon {
+  width: 8px;
+  height: 14px;
+}
+
+/* ---- Plus button ---- */
+.plusButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-black);
+  flex-shrink: 0;
+}
+
+.plusButton:hover {
+  background: var(--neutral-600);
+}
+
+@media (min-width: 768px) {
+  .counter {
+    font-size: 18px;
+  }
+}

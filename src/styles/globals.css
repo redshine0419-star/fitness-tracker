@@ -38,10 +38,16 @@ a {
   text-decoration: none;
 }
 
-img,
-svg {
+img {
   display: block;
   max-width: 100%;
+}
+
+/* DS §7 SVG 공통 규칙 */
+svg {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 input,
@@ -66,7 +72,7 @@ body {
     "Noto Sans KR",
     sans-serif;
   color: var(--text-02);
-  background: var(--color-bg-white);
+  background: var(--white);
   word-break: keep-all;
   overflow-wrap: break-word;
 }

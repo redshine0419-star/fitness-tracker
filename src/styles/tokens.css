@@ -111,15 +111,21 @@
   /* Hero photo legibility overlay for white text (same color family as DS Modal overlay) */
   --overlay-hero: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
   /* Contrast escape hatch (§5.5) — change this ONE variable if the org decides to switch off DS default */
-  --btn-primary-text: #ffffff;
+  --btn-primary-text: var(--white);
   /* Contrast escape hatch (§5.5) — change to var(--green-700) if the org decides to switch off DS default */
   --text-accent: var(--green-500);
   /* Border/White button hover background on dark hero photos */
   --hover-on-dark: rgba(255, 255, 255, 0.15);
   /* DS §0 "캔버스: 항상 흰 배경" — DS는 이 흰색에 별도 토큰명을 두지 않아 시맨틱 토큰으로 확장 */
-  --color-bg-white: #ffffff;
+  --white: #ffffff;
   /* Modal overlay — DS §8-8 "overlay: rgba(0,0,0,0.5)"을 토큰화 */
   --overlay-modal: rgba(0, 0, 0, 0.5);
+
+  /* DS §8-6 Carousel — 네임드 토큰이 없는 DS 고유 색상값들을 토큰화 */
+  --carousel-control-hover: #d0d0d3; /* 컨트롤러 버튼(44px 원형) Hover 배경 */
+  --carousel-icon-hover: #444444; /* 컨트롤러 버튼 아이콘 Hover 색상 */
+  --indicator-pill-bg: rgba(226, 226, 229, 0.9); /* 인디케이터 pill(PC) 배경 */
+  --carousel-counter-total: #555555; /* 캐러셀 카운터의 "전체" 숫자 색상 */
 
   /* Section-to-section gaps (DS §4 "섹션 간 간격" table, tokenized). Mobile-first:
      base values below are Mobile; overridden for >=768px in grid.css media query. */

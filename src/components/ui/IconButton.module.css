@@ -1,0 +1,29 @@
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-btn-size, 44px);
+  height: var(--icon-btn-size, 44px);
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+  color: var(--text-03);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.iconButton :global(svg) {
+  width: 20px;
+  height: 20px;
+}
+
+.iconButton:hover {
+  background: var(--carousel-control-hover);
+  color: var(--carousel-icon-hover);
+}
+
+.iconButton:disabled {
+  background: var(--color-border-default);
+  color: var(--text-04);
+  cursor: not-allowed;
+}

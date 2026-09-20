@@ -1,0 +1,78 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-01);
+  margin-bottom: var(--space-2);
+}
+
+.input {
+  width: 100%;
+  border-radius: var(--radius-8);
+  border: 1px solid var(--color-border-default);
+  background: var(--white);
+  color: var(--text-01);
+}
+
+.input::placeholder {
+  color: var(--text-04);
+}
+
+.input:focus {
+  border: 1.5px solid var(--color-brand-primary);
+}
+
+.input[data-state="error"],
+.input[data-state="error"]:focus {
+  border: 1.5px solid var(--color-brand-point);
+}
+
+.input:disabled {
+  background: var(--color-border-default);
+  border-color: var(--color-border-default);
+  color: var(--text-04);
+  cursor: not-allowed;
+}
+
+.input[data-size="sm"] {
+  height: 40px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+.input[data-size="md"] {
+  height: 48px;
+  padding: 12px 16px;
+  font-size: 16px;
+}
+.input[data-size="lg"] {
+  height: 56px;
+  padding: 14.5px 16px;
+  font-size: 18px;
+}
+
+.errorMessage {
+  margin-top: var(--space-1);
+  font-size: 14px;
+  color: var(--color-brand-point);
+}
+
+.helperMessage {
+  margin-top: var(--space-1);
+  font-size: 14px;
+  color: var(--text-03);
+}
+
+@media (min-width: 768px) {
+  .label {
+    margin-bottom: var(--space-3);
+  }
+  .errorMessage,
+  .helperMessage {
+    margin-top: var(--space-2);
+  }
+}

@@ -44,7 +44,7 @@
 | 확장 | text-accent | var(--green-500) (DS 원안) | `--text-accent` | ✅ |
 | 확장 | hover-on-dark | rgba(255,255,255,.15) | `--hover-on-dark` | ✅ |
 | 확장 | section-gap-sm/md/lg | PC 60/80/140, Mobile 40/60/100 | `--section-gap-*` (media query로 교체) | ✅ |
-| 확장(신규, DEVIATIONS 기록) | color-bg-white | #FFFFFF | `--color-bg-white` | DS에 명명 토큰 없어 신규 추가 |
+| 확장(신규, DEVIATIONS 기록) | white | #FFFFFF | `--white` | DS에 명명 토큰 없어 신규 추가 |
 | 확장(신규, DEVIATIONS 기록) | overlay-modal | rgba(0,0,0,.5) | `--overlay-modal` | DS §8-8 값을 토큰화 |
 
 **검증 결과**
@@ -64,9 +64,57 @@ $ npx next build           → 성공, `/` 정적 생성됨
 **스크린샷**: `docs/screenshots/step-0/{1920,768,360}.png` (현재는 플레이스홀더 H1만 있는 화면 — 폰트/타이포 토큰이 정상 적용되는지 확인 목적)
 
 **DS와 다르게 한 점 / 결정 사항**
-- `--color-bg-white`, `--overlay-modal` 두 토큰을 새로 추가 (DS §5.4 확장 토큰 표에 없던 항목). 사유는 DEVIATIONS.md 참조.
+- `--white`, `--overlay-modal` 두 토큰을 새로 추가 (DS §5.4 확장 토큰 표에 없던 항목). 사유는 DEVIATIONS.md 참조.
 - Next.js 버전이 16.3.5로, `next dev`가 `AGENTS.md`/`CLAUDE.md`에 "이 버전은 학습 데이터와 다를 수 있다"는 경고를 자동 생성함. `node_modules/next/dist/docs/`에서 관련 가이드(폰트 API 등)를 확인하며 진행 중이며, Step 2(메타데이터 규칙 확인)·Step 6(SEO/사이트맵) 진입 시 해당 문서를 다시 확인할 예정.
 
 **질문**: 없음 (모두 §16 기본값 또는 보수적 결정으로 진행)
+
+---
+
+## Step 1 — UI 컴포넌트 라이브러리 + `/dev/components` 카탈로그 (완료)
+
+**변경한 파일**
+- `src/components/icons/ds/*` — DS §7/§8-6/§8-11 SVG를 원문 그대로 컴포넌트화 (Pause, Left, Right, Play, Plus, Search)
+- `src/components/common/Picture.tsx` — PC/Mobile 이미지 `<picture>` 전환 (SVG 플레이스홀더라 next/image 대신 순수 img 사용, 이유는 코드 주석 참고)
+- `src/components/common/VisuallyHidden.tsx` — 시각적 숨김 공통 컴포넌트
+- `src/components/ui/Button.tsx` (+module.css) — Filled/Border × Primary/Secondary/Gray/White × 5 사이즈 × Square/Round
+- `src/components/ui/Input.tsx` — Small/Medium/Large × Default/Completed/Disabled/Error(+Focused는 :focus)
+- `src/components/ui/Dropdown.tsx` — Medium, Default/Selected/Active, 키보드(↑↓/Enter/Esc), 푸터 고정폭 옵션
+- `src/components/ui/Checkbox.tsx` — PC24/Mobile20, 원형
+- `src/components/ui/Tab01.tsx` — Pill, role="tablist", ←/→ 키 이동
+- `src/components/ui/Badge01.tsx` — Border/Filled-Gray, 크기 S (Phase1 체크리스트 범위만)
+- `src/components/ui/Card.tsx` — default/compact 변형 + `Banner` (전체가 링크 하나, 안에 h3)
+- `src/components/ui/CarouselControls.tsx` — Carousel_pc(카운터+Pause/Prev/Next), Carousel_mobile pill, 인디케이터 pill, Plus 버튼
+- `src/components/ui/IconButton.tsx` — 44/48px 컨트롤러 원형 버튼
+- `src/components/ui/Modal.tsx` — 포커스 트랩, Esc, 스크롤 잠금, 트리거로 포커스 복귀
+- `src/components/ui/Table.tsx` — PC/Mobile 셀
+- `src/app/dev/components/page.tsx` (+layout.tsx, catalog.module.css) — 전체 카탈로그, 프로덕션에서는 404
+- `public/placeholder/gray.svg` — 재사용 가능한 단색 회색 SVG 1장(뷰박스 0~1, `preserveAspectRatio="none"`로 어떤 크기에도 늘어남)
+- `src/styles/tokens.css` — Carousel/§8-6 관련 무명 DS 색상 3개 토큰화 (`--carousel-control-hover`, `--carousel-icon-hover`, `--indicator-pill-bg`, `--carousel-counter-total`), `--color-bg-white`를 `--white`로 이름 정리
+- `scripts/ds-exceptions.json` — Button(2X-small/Small), Input(Small), Tab01(Mobile), Carousel_mobile pill의 DS 지정 padding 등록
+- `playwright.config.ts`, `tests/e2e/smoke.spec.ts` — E2E 뼈대 (Desktop/Tablet/Mobile 3프로젝트), Step별로 시나리오 누적 예정
+
+**검증 결과**
+```
+$ npm run verify
+✔ lint (eslint) — 통과
+✔ typecheck (tsc --noEmit) — 통과
+✔ check:tokens — 통과 (16개 CSS 파일 검사)
+✔ build (next build) — 성공, /, /dev/components 모두 정적 생성
+✔ test:e2e (playwright, Desktop/Tablet/Mobile) — 3/3 통과
+```
+(참고: 이 샌드박스에서 Playwright headless 실행에는 `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`와
+`PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome` 환경변수가 필요했습니다 —
+사전 설치된 Chromium 리비전과 npm 패키지가 기대하는 headless-shell 리비전이 달라서입니다.
+다른 환경에서는 `npx playwright install chromium` 한 번으로 충분합니다.)
+
+**스크린샷**: `docs/screenshots/step-1/{1920,768,360}.png` — `/dev/components` 카탈로그 전체 페이지. 모든 컴포넌트의 변형(스타일×색상×사이즈×모양 등)과 상태(Default/Hover 대상은 코드로 확인, Disabled/Error/Selected/Active는 화면에 표시)가 한 페이지에 보입니다.
+
+**DS와 다르게 한 점 / 질문**
+- DEVIATIONS.md #3 (`/dev/components` 런타임 404), #4 (Checkbox sr-only `clip-path`) 참고.
+- Badge01은 PROJECT_SPEC §8 체크리스트가 요구한 "Border / Filled-Gray, 크기 S"만 구현했습니다 (Filled(파랑)·L·M은 이 프로젝트 어디에서도 쓰이지 않아 범위에서 제외).
+- Card의 "article > h3 > a" 문구와 "카드 전체가 링크(하나)" 요구가 문자 그대로는 함께 만족시키기 애매해, `<a>`가 이미지·뱃지·제목·설명을 전부 감싸고 그 안에 `<h3>`를 두는 방식으로 구현했습니다 (스크린리더가 "링크, 3단계 제목"으로 읽음, 링크 중첩 없음). 질문이라기보다 구현 판단이라 별도 DEVIATIONS 항목은 만들지 않았습니다.
+
+**질문**: 없음
 
 ---

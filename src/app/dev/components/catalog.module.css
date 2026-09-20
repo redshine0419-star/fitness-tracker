@@ -1,0 +1,63 @@
+.page {
+  padding: var(--space-10) 0 var(--space-30);
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 var(--space-10);
+}
+
+.section {
+  border-top: 1px solid var(--color-border-light);
+  padding: var(--space-8) 0;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 var(--space-4);
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.rowLabel {
+  flex: 0 0 200px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-03);
+  padding-top: var(--space-2);
+}
+
+.rowContent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.darkSwatch {
+  display: inline-flex;
+  padding: var(--space-4);
+  background: var(--neutral-black);
+  border-radius: var(--radius-8);
+}
+
+.cardSlot {
+  width: 280px;
+}
+
+.compactSlot {
+  width: 200px;
+}
